@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".Activité_n2.Fragments.Magnéto.Magneto">
+
+    <LinearLayout
+        android:layout_width="395dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backward2"
+            android:layout_width="275dp"
+            android:layout_height="117dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/backward2" />
+
+        <ImageButton
+            android:id="@+id/backward"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/backward" />
+
+        <ImageButton
+            android:id="@+id/forward"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/forward" />
+
+        <ImageButton
+            android:id="@+id/forward2"
+            android:layout_width="275dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:src="@drawable/forward2" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

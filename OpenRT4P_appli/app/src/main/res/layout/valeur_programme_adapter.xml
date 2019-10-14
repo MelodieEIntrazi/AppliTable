@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/idProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="TextView"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/nomIdProgramme"
+            app:layout_constraintTop_toTopOf="@+id/nomIdProgramme" />
+
+        <TextView
+            android:id="@+id/accelerationProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomAcceleration"
+            app:layout_constraintTop_toTopOf="@+id/nomAcceleration" />
+
+        <TextView
+            android:id="@+id/speedProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="grgfgdf"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomSpeed"
+            app:layout_constraintTop_toTopOf="@+id/nomSpeed" />
+
+        <TextView
+            android:id="@+id/frameProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomFrame"
+            app:layout_constraintTop_toBottomOf="@+id/accelerationProgramme" />
+
+        <TextView
+            android:id="@+id/timeBetweenphotosProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomTimeBetween"
+            app:layout_constraintTop_toBottomOf="@+id/frameProgramme" />
+
+        <TextView
+            android:id="@+id/cameraProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomCameraProgramme"
+            app:layout_constraintTop_toBottomOf="@+id/timeBetweenphotosProgramme" />
+
+        <Switch
+            android:id="@+id/directionProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="Switch"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomDirection"
+            app:layout_constraintTop_toBottomOf="@+id/cameraProgramme" />
+
+        <TextView
+            android:id="@+id/stepsProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/nomSteps"
+            app:layout_constraintTop_toBottomOf="@+id/cameraProgramme" />
+
+        <Button
+            android:id="@+id/okProgramme"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="28dp"
+            android:background="@color/colorPrimary"
+            android:text="Sélectionner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/directionProgramme" />
+
+        <Button
+            android:id="@+id/deleteProgramme"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="Supprimer"
+            app:layout_constraintStart_toEndOf="@+id/okProgramme"
+            app:layout_constraintTop_toTopOf="@+id/okProgramme" />
+
+        <TextView
+            android:id="@+id/nomIdProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="ID :"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nomAcceleration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Accélération :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomIdProgramme" />
+
+        <TextView
+            android:id="@+id/nomSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="Vitesse :"
+            app:layout_constraintStart_toEndOf="@+id/accelerationProgramme"
+            app:layout_constraintTop_toTopOf="@+id/accelerationProgramme" />
+
+        <TextView
+            android:id="@+id/nomFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Nombre de photos :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accelerationProgramme" />
+
+        <TextView
+            android:id="@+id/nomTimeBetween"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Pause entre chaque camera(s) :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomFrame" />
+
+        <TextView
+            android:id="@+id/nomCameraProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Nombre de caméras :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomTimeBetween" />
+
+        <TextView
+            android:id="@+id/nomDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Direction :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomCameraProgramme" />
+
+        <TextView
+            android:id="@+id/nomSteps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="4dp"
+            android:text="Nombre de pas :"
+            app:layout_constraintStart_toEndOf="@+id/directionProgramme"
+            app:layout_constraintTop_toBottomOf="@+id/cameraProgramme" />
+
+        <TextView
+            android:id="@+id/FocusStacking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="2dp"
+            android:text="FocusStacking : "
+            app:layout_constraintStart_toStartOf="@+id/nomDirection"
+            app:layout_constraintTop_toBottomOf="@+id/directionProgramme" />
+
+        <Switch
+            android:id="@+id/focusStackingChoix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Switch"
+            app:layout_constraintStart_toEndOf="@+id/FocusStacking"
+            app:layout_constraintTop_toBottomOf="@+id/directionProgramme" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
