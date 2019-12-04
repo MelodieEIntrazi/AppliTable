@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,10 +30,12 @@ class PlaceholderFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_main, container, false)
-        val textView: TextView = root.findViewById(R.id.section_label)
+        val listView: ListView = root.findViewById(R.id.select_device_list)
+        /*
         pageViewModel.text.observe(this, Observer<String> {
-            textView.text = it
+        listView.list = it
         })
+        */
         return root
     }
 
