@@ -28,7 +28,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
     private var adresse: String? = null
     private var handler: Handler? = null
     private var device: BluetoothDevice? = null
-    private lateinit var socket: BluetoothSocket
+    private var socket: BluetoothSocket? = null
     private var receiveStream: InputStream? = null
     private var sendStream: OutputStream? = null
     private var tReception: TReception? = null
@@ -39,7 +39,6 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
     }
 
     fun envoyer(data: String) {
-        if (socket == null) return
         try {
             sendStream!!.write(data.toByteArray())
             sendStream!!.flush()
@@ -63,9 +62,9 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                         e.printStackTrace()
                         return
                     }
-                    socket.connect()
-                    sendStream = socket.getOutputStream()
-                    receiveStream = socket.getInputStream()
+                    socket!!.connect()
+                    sendStream = socket!!.outputStream
+                    receiveStream = socket!!.inputStream
                     tReception!!.start()
                     isConnected = true
                     println("connexion établie")
@@ -137,7 +136,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         }
 
         fun arreter() {
-            if (fini == false) {
+            if (!fini) {
                 fini = true
             }
             try {
@@ -212,7 +211,6 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
     }
 
     companion object {
-        @JvmField
         var peripherique: Peripherique? = null
     }
 
@@ -230,12 +228,15 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         }
         try {
             socket = device!!.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
-            receiveStream = socket.getInputStream()
-            sendStream = socket.getOutputStream()
+            receiveStream = socket!!.inputStream
+            sendStream = socket!!.outputStream
         } catch (e: IOException) {
             e.printStackTrace()
-            //socket = null
+            socket = null
         }
-        if (socket != null) tReception = TReception(handler)
+        if (socket != null) {
+            tReception = TReception(handler)
+        }
+
     }
 }

@@ -75,7 +75,7 @@ class Menu : androidx.fragment.app.Fragment() {
         spinnerMode!!.adapter = adapter
         adapter.setNotifyOnChange(true)
         spinnerMode!!.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     1 -> {
                         fragmentManager!!.beginTransaction().add(R.id.fragment, Programme.programme).addToBackStack(null).commit()
