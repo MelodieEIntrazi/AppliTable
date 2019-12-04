@@ -52,10 +52,10 @@ class Connexion : AppCompatActivity() {
         btnConnecter = findViewById(R.id.btnConnecter)
 
         btnConnecter!!.setOnClickListener {
-            //System.out.println("click sur connecter");
-            //peripherique.connecter();
-            //while(!peripherique.isConnected);
-            //Peripherique.peripherique = peripherique;
+            System.out.println("click sur connecter")
+            peripherique!!.connecter()
+            while (!peripherique!!.isConnected);
+            Peripherique.peripherique = peripherique
             val intent = Intent(this@Connexion, MainActivity::class.java)
             startActivity(intent)
         }

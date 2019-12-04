@@ -15,7 +15,6 @@ import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
 import com.example.application.R
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 /**
@@ -44,10 +43,10 @@ class Menu : androidx.fragment.app.Fragment() {
                 var data = ""
                 data += "-1" + "," //id commande pas utile mais necessaire
                 data += "3"
-                if (pauseButton!!.getText() == "PAUSE") {
-                    pauseButton!!.setText("START")
+                if (pauseButton!!.text == "PAUSE") {
+                    pauseButton!!.text = "START"
                 } else {
-                    pauseButton!!.setText("PAUSE")
+                    pauseButton!!.text = "PAUSE"
                 }
                 peripherique!!.envoyer(data)
             }
@@ -60,7 +59,7 @@ class Menu : androidx.fragment.app.Fragment() {
             orderAdapter = OrderAdapter(MainActivity.context!!, ListOrder.list)
         }
         if (instructionAdapter == null) {
-            instructionAdapter = InstructionAdapter(MaintActivity.context, null)
+            instructionAdapter = InstructionAdapter(MainActivity.context!!, null)
         }
         if (spinnerFirstTime) {
             spinnerModeItems.add("Nouvelle Commande")
@@ -73,9 +72,9 @@ class Menu : androidx.fragment.app.Fragment() {
          */
         val adapter = ArrayAdapter(context, R.layout.custom_spinner, spinnerModeItems)
         adapter.setDropDownViewResource(R.layout.custom_spinner)
-        spinnerMode!!.setAdapter(adapter)
+        spinnerMode!!.adapter = adapter
         adapter.setNotifyOnChange(true)
-        spinnerMode!!.setOnItemSelectedListener(object : OnItemSelectedListener {
+        spinnerMode!!.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 when (position) {
                     1 -> {
@@ -92,7 +91,7 @@ class Menu : androidx.fragment.app.Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
-        })
+        }
         /*
         adapter de la liste des commandes en fonctions des 2 menu
          */
@@ -104,8 +103,8 @@ class Menu : androidx.fragment.app.Fragment() {
         Permet de quitter le container contenant les différents infos
          */deleteButton!!.setOnClickListener(View.OnClickListener {
             instructionAdapter!!.instructionList = null
-            deleteButton!!.setVisibility(View.INVISIBLE)
-            view?.setVisibility(View.INVISIBLE)
+            deleteButton!!.visibility = View.INVISIBLE
+            view?.visibility = View.INVISIBLE
             listInfos!!.visibility = View.INVISIBLE
         })
         /*
