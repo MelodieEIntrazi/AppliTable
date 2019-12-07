@@ -1,23 +1,23 @@
 package com.example.application.Activité_n2.Fragments.SauvegardeBDD
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import com.example.application.Activité_n2.AjoutBDD.ajoutBDDVR
-import com.example.application.Activité_n2.AjoutBDD.ajoutVR
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
+import com.example.application.Activité_n2.MainActivity
+import com.example.application.BDD.DbThread
+import com.example.application.BDD.ValeurReelAndProgDataBase
+import com.example.application.Objets.ValeurReel
 import com.example.application.R
-import com.example.application.objets.valeurReel
 
 /**
  * Permet de sauvegarder les information du Mode Temps réel en ajoutant un texte et en valider grace au bouton ok
  */
-class SauvegardeReel : androidx.fragment.app.Fragment(), ajoutVR {
-    private var majoutAsyncTask: ajoutBDDVR? = null
+class SauvegardeReel : androidx.fragment.app.Fragment() {
     var accelerationEditText: String? = null
     var vitesseEditText: String? = null
     var directionSwitch: Boolean? = null
@@ -26,6 +26,10 @@ class SauvegardeReel : androidx.fragment.app.Fragment(), ajoutVR {
     var choix_rotationSwitch: Boolean? = null
     var oKButton: Button? = null
     var idRentre: EditText? = null
+    private var valeurReelAndProgDataBase: ValeurReelAndProgDataBase? = null
+    private lateinit var mDbWorkerThread: DbThread
+
+    private val mUiHandler = Handler()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sauvegarde_reel, container, false)
         accelerationEditText = arguments!!.getString("AccelerationSaveTempsReel")
@@ -36,6 +40,9 @@ class SauvegardeReel : androidx.fragment.app.Fragment(), ajoutVR {
         choix_rotationSwitch = arguments!!.getBoolean("RotationModeSaveTempsReel")
         oKButton = view.findViewById(R.id.sauverReel)
         idRentre = view.findViewById(R.id.IDrentreReel)
+        valeurReelAndProgDataBase = ValeurReelAndProgDataBase.getDatabase(context = MainActivity.context!!)
+        mDbWorkerThread = DbThread("dbWorkerThread")
+        mDbWorkerThread.start()
         return view
     }
 
@@ -44,29 +51,36 @@ class SauvegardeReel : androidx.fragment.app.Fragment(), ajoutVR {
      */
     override fun onStart() {
         super.onStart()
-        majoutAsyncTask = ajoutBDDVR(this)
+        //majoutAsyncTask = ajoutBDDVR(this)
         oKButton!!.setOnClickListener {
-            val nouvelEnregistrement = valeurReel()
-            nouvelEnregistrement.id = idRentre!!.text.toString()
-            nouvelEnregistrement.acceleration = accelerationEditText
-            nouvelEnregistrement.direction = directionSwitch
-            nouvelEnregistrement.speed = vitesseEditText
-            nouvelEnregistrement.tableSteps = stepsEditText
-            nouvelEnregistrement.rotationNumber = rotation_numberEditText
-            nouvelEnregistrement.rotationMode = choix_rotationSwitch
-            majoutAsyncTask!!.execute(nouvelEnregistrement)
+            val nouvelEnregistrement = ValeurReel(idRentre!!.text.toString(), stepsEditText, accelerationEditText, vitesseEditText, directionSwitch, choix_rotationSwitch, rotation_numberEditText)
+            //val listnew= listOf<ValeurReel>(nouvelEnregistrement)
+            /* nouvelEnregistrement.id = idRentre!!.text.toString()
+             nouvelEnregistrement.acceleration = accelerationEditText
+             nouvelEnregistrement.direction = directionSwitch
+             nouvelEnregistrement.speed = vitesseEditText
+             nouvelEnregistrement.tableSteps = stepsEditText
+             nouvelEnregistrement.rotationNumber = rotation_numberEditText
+             nouvelEnregistrement.rotationMode = choix_rotationSwitch*/
+            //majoutAsyncTask!!.execute(nouvelEnregistrement)
+            insertWeatherDataInDb(nouvelEnregistrement)
+            //mDbWorkerThread.quit()
+            fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
         }
     }
 
     /*
     Check si la bdd est pleine ou si l'élément existait déja
      */
-    override fun ajoutBDDvaleursR(bool: Int?) {
-        if (bool == 1) {
-            Toast.makeText(context, "Impossible d'ajouter, supprimez un élément", Toast.LENGTH_LONG).show()
-        } else if (bool == 2) {
-            Toast.makeText(context, "Cet élément a écrasé l'élément de même nom", Toast.LENGTH_LONG).show()
-        }
-        fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+    private fun insertWeatherDataInDb(valeurReel: ValeurReel) {
+        val task = Runnable { valeurReelAndProgDataBase?.vRDao()?.insert(valeurReel) }
+        mDbWorkerThread.postTask(task)
+    }
+
+    override fun onDestroy() {
+        mDbWorkerThread.quit()
+
+        super.onDestroy()
+
     }
 }

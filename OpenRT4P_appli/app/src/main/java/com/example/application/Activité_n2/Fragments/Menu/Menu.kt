@@ -12,6 +12,7 @@ import com.example.application.Activité_n2.Adapter.OrderAdapter
 import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
 import com.example.application.R
@@ -37,6 +38,7 @@ class Menu : androidx.fragment.app.Fragment() {
         moduleButton = v.findViewById(R.id.modules_menu)
         peripheriqueButton = v.findViewById(R.id.modules_menu)
         peripherique = Peripherique.peripherique
+        val onChangeFragListener: ChangeFragments = MainActivity.listener!!
         //Permet de gerer la pause et d'envoyer l'information au boitier
         pauseButton!!.setOnClickListener(View.OnClickListener {
             if (ListOrder.list.size != 0) {
@@ -78,11 +80,13 @@ class Menu : androidx.fragment.app.Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     1 -> {
-                        fragmentManager!!.beginTransaction().add(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+                        //fragmentManager!!.beginTransaction().add(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+                        onChangeFragListener.onChangeFragment(Programme.programme)
                         spinnerMode!!.setSelection(0)
                     }
                     2 -> {
-                        fragmentManager!!.beginTransaction().add(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+                        onChangeFragListener.onChangeFragment(TempsReel.temps_reel)
+                        //fragmentManager!!.beginTransaction().add(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
                         spinnerMode!!.setSelection(0)
                     }
                     else -> {

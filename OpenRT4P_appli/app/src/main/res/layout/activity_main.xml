@@ -9,9 +9,8 @@
     tools:context=".Activité_n2.MainActivity">
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
-        android:name="com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

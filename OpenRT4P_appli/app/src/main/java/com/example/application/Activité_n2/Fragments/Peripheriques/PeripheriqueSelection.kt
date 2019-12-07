@@ -43,9 +43,9 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
         if (peripheriqueAdapter == null) {
             peripheriqueAdapter = PeripheriqueSelectionAdapter(MainActivity.context!!, listPeripheriques)
         }
-        peripheriquesRecycler!!.setLayoutManager(layoutManager)
-        peripheriquesRecycler!!.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
-        peripheriquesRecycler!!.setAdapter(peripheriqueAdapter)
+        peripheriquesRecycler!!.layoutManager = layoutManager
+        peripheriquesRecycler!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        peripheriquesRecycler!!.adapter = peripheriqueAdapter
         envoyer = v.findViewById(R.id.envoyer_peripherique_selection)
         envoyer!!.setOnClickListener(View.OnClickListener {
             var data = "0,7"
@@ -55,7 +55,7 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
                 } else ",0"
             }
             try {
-                envoyer!!.setEnabled(false)
+                envoyer!!.isEnabled = false
                 com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
                 fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
 
@@ -70,12 +70,10 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
     }
 
     companion object {
-        @JvmField
         var peripheriqueSelection = PeripheriqueSelection()
         var peripheriquesRecycler: androidx.recyclerview.widget.RecyclerView? = null
         var peripheriqueAdapter: PeripheriqueSelectionAdapter? = null
         var envoyer: Button? = null
-        @JvmField
         var listPeripheriques = ArrayList<Peripherique>()
     }
 }

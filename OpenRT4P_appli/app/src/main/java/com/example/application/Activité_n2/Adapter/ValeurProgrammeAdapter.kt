@@ -7,14 +7,12 @@ import android.widget.*
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddProgramme
 import com.example.application.Activité_n2.Interface.SelectionProgramme
 import com.example.application.Activité_n2.MainActivity
-import com.example.application.Activité_n2.SupppressionBDD.SuppressionBDDP
+import com.example.application.Objets.ValeurProgramme
 import com.example.application.R
-import com.example.application.objets.valeurProgramme
 
-class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter(), View.OnClickListener {
+class ValeurProgrammeAdapter(var mListeVP: List<ValeurProgramme>?) : BaseAdapter(), View.OnClickListener {
     private val mInflater: LayoutInflater
     private var mListener: SelectionProgramme? = null
-    private val mBDDAsyncTask: SuppressionBDDP
     fun setmListener(mListener: SelectionProgramme?) {
         this.mListener = mListener
     }
@@ -33,7 +31,7 @@ class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter
 
     fun getViewUglyWay(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = mInflater.inflate(R.layout.valeur_programme_adapter, null)
-        val valeurP = getItem(position) as valeurProgramme
+        val valeurP = getItem(position) as ValeurProgramme
         val id = view.findViewById<TextView>(R.id.idProgramme)
         id.text = valeurP.id
         val speed = view.findViewById<TextView>(R.id.speedProgramme)
@@ -57,11 +55,11 @@ class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter
         return view
     }
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getViewBestWay(position, convertView, parent)
     }
 
-    private fun getViewBestWay(position: Int, convertView: View, parent: ViewGroup): View {
+    private fun getViewBestWay(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val holder: ViewHolderProgramme
         if (null == convertView) {
@@ -71,7 +69,7 @@ class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter
         } else {
             holder = convertView.tag as ViewHolderProgramme
         }
-        val valeurP = getItem(position) as valeurProgramme
+        val valeurP = getItem(position) as ValeurProgramme
         holder.id.text = valeurP.id
         holder.acceleration.text = valeurP.acceleration
         holder.camera.text = valeurP.camera_number
@@ -87,19 +85,19 @@ class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter
         holder.selection.setOnClickListener(this)
         holder.suppression.tag = position
         holder.suppression.setOnClickListener(this)
-        return convertView
+        return convertView!!
     }
 
     override fun onClick(v: View) {
         val position = v.tag as Int
-        val valeurP = getItem(position) as valeurProgramme
+        val valeurP = getItem(position) as ValeurProgramme
         val idAPasser: String? = null
         when (v.id) {
             R.id.deleteProgramme -> {
                 Toast.makeText(MainActivity.context, "Suppression", Toast.LENGTH_LONG).show()
                 if (null != mListener) {
-                    mBDDAsyncTask.execute(valeurP)
-                    mListener!!.onDelete()
+
+                    mListener!!.onDelete(valeurP)
                 }
             }
             R.id.okProgramme -> {
@@ -113,6 +111,5 @@ class ValeurProgrammeAdapter(var mListeVP: List<valeurProgramme>?) : BaseAdapter
 
     init {
         mInflater = LayoutInflater.from(BddProgramme.bddProgramme.context)
-        mBDDAsyncTask = SuppressionBDDP()
     }
 }

@@ -58,6 +58,7 @@ class Connexion : AppCompatActivity() {
             Peripherique.peripherique = peripherique
             val intent = Intent(this@Connexion, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         adaptateurBluetooth = BluetoothAdapter.getDefaultAdapter()

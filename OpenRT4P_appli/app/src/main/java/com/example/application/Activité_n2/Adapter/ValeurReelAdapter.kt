@@ -7,24 +7,23 @@ import android.widget.*
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddTempsReel
 import com.example.application.Activité_n2.Interface.SelectionReel
 import com.example.application.Activité_n2.MainActivity
-import com.example.application.Activité_n2.SupppressionBDD.SuppressionBDDR
+import com.example.application.Objets.ValeurReel
 import com.example.application.R
-import com.example.application.objets.valeurReel
 
-class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.OnClickListener {
+class ValeurReelAdapter(var mListeVR: List<ValeurReel>) : BaseAdapter(), View.OnClickListener {
     private val mInflater: LayoutInflater
     private var mListener: SelectionReel? = null
-    private val mBDDAsyncTask: SuppressionBDDR
+    //private val mBDDAsyncTask: SuppressionBDDR
     fun setmListener(mListener: SelectionReel?) {
         this.mListener = mListener
     }
 
     override fun getCount(): Int {
-        return if (null != mListeVR) mListeVR!!.size else 0
+        return mListeVR.size
     }
 
     override fun getItem(position: Int): Any {
-        return if (null != mListeVR) mListeVR!![position] else Any()
+        return mListeVR[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -33,7 +32,7 @@ class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.O
 
     fun getViewUglyWay(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = mInflater.inflate(R.layout.valeur_reel_adapter, null)
-        val valeurR = getItem(position) as valeurReel
+        val valeurR = getItem(position) as ValeurReel
         val id = view.findViewById<TextView>(R.id.idReel)
         id.text = valeurR.id
         val speed = view.findViewById<TextView>(R.id.speedReel)
@@ -55,11 +54,11 @@ class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.O
         return view
     }
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getViewBestWay(position, convertView, parent)
     }
 
-    private fun getViewBestWay(position: Int, convertView: View, parent: ViewGroup): View {
+    private fun getViewBestWay(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val holder: ViewHolderReel
         if (null == convertView) {
@@ -69,7 +68,7 @@ class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.O
         } else {
             holder = convertView.tag as ViewHolderReel
         }
-        val valeurR = getItem(position) as valeurReel
+        val valeurR = getItem(position) as ValeurReel
         holder.id.text = valeurR.id
         holder.acceleration.text = valeurR.acceleration
         holder.nbRotation.text = valeurR.rotationNumber
@@ -83,18 +82,18 @@ class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.O
         holder.selection.setOnClickListener(this)
         holder.suppression.tag = position
         holder.suppression.setOnClickListener(this)
-        return convertView
+        return convertView!!
     }
 
     override fun onClick(v: View) {
         val position = v.tag as Int
-        val valeurR = getItem(position) as valeurReel
+        val valeurR = getItem(position) as ValeurReel
         when (v.id) {
             R.id.deleteReel -> {
                 Toast.makeText(MainActivity.context, "Suppression", Toast.LENGTH_LONG).show()
                 if (null != mListener) {
-                    mBDDAsyncTask.execute(valeurR)
-                    mListener!!.onDelete()
+                    //mBDDAsyncTask.execute(valeurR)
+                    mListener!!.onDelete(valeurR)
                 }
             }
             R.id.okReel -> {
@@ -108,6 +107,6 @@ class ValeurReelAdapter(var mListeVR: List<valeurReel>?) : BaseAdapter(), View.O
 
     init {
         mInflater = LayoutInflater.from(BddTempsReel.bddTempsReel.context)
-        mBDDAsyncTask = SuppressionBDDR()
+        //mBDDAsyncTask = SuppressionBDDR()
     }
 }

@@ -1,8 +1,8 @@
 package com.example.application.Activité_n2.Interface
 
-import com.example.application.objets.valeurProgramme
+import com.example.application.Objets.ValeurProgramme
 
 interface SelectionProgramme {
-    fun onSelection(valeurP: valeurProgramme?)
-    fun onDelete()
+    fun onSelection(valeurP: ValeurProgramme?)
+    fun onDelete(valeurP: ValeurProgramme)
 }
