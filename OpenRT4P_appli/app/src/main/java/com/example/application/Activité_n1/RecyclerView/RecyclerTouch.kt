@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 Class appelée pour que l'on puisse cliquer sur un périphérique lorsque l'on se trouve sur la page de connexion
 Elle permet d'identifier le bon périphérique cliqué par l'utilisateur
  */
-@Suppress("DEPRECATION")
 class RecyclerTouch(context: Context?, recyclerView: androidx.recyclerview.widget.RecyclerView, private val clickListener: ClickListener?) : OnItemTouchListener {
     private val gestureDetector: GestureDetector
     override fun onInterceptTouchEvent(rv: androidx.recyclerview.widget.RecyclerView, e: MotionEvent): Boolean {
         val child = rv.findChildViewUnder(e.x, e.y)
         if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-            clickListener.onClick(child, rv.getChildPosition(child))
+            clickListener.onClick(child, rv.getChildAdapterPosition(child))
         }
         return false
     }
@@ -38,7 +37,7 @@ class RecyclerTouch(context: Context?, recyclerView: androidx.recyclerview.widge
             override fun onLongPress(e: MotionEvent) {
                 val child = recyclerView.findChildViewUnder(e.x, e.y)
                 if (child != null && clickListener != null) {
-                    clickListener.onLongClick(child, recyclerView.getChildPosition(child))
+                    clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child))
                 }
             }
         })
