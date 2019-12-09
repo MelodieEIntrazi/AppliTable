@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Adapter.InstructionAdapter
 import com.example.application.Activité_n2.Adapter.OrderAdapter
+import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddTempsReel
 import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
@@ -32,9 +36,10 @@ class Menu : androidx.fragment.app.Fragment() {
         Companion.view = v.findViewById(R.id.infos)
         deleteButton = v.findViewById(R.id.deleteInfos)
         spinnerMode = v.findViewById(R.id.spinner)
-        listOrder = v.findViewById<View>(R.id.orderList) as androidx.recyclerview.widget.RecyclerView
-        listInfos = v.findViewById<View>(R.id.infosInstructions) as androidx.recyclerview.widget.RecyclerView
+        listOrder = v.findViewById<View>(R.id.orderList) as RecyclerView
+        listInfos = v.findViewById<View>(R.id.infosInstructions) as RecyclerView
         pauseButton = v.findViewById(R.id.pause_menu)
+        chargeButton = v.findViewById(R.id.charger)
         moduleButton = v.findViewById(R.id.modules_menu)
         peripheriqueButton = v.findViewById(R.id.modules_menu)
         peripherique = Peripherique.peripherique
@@ -55,6 +60,9 @@ class Menu : androidx.fragment.app.Fragment() {
                 }
                 peripherique!!.envoyer(data)
             }
+        })
+        chargeButton!!.setOnClickListener(View.OnClickListener {
+            onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
         })
         //Permet de gerer le changement de fragment entre le menu et les périphériques
         peripheriqueButton!!.setOnClickListener(View.OnClickListener {
@@ -105,9 +113,9 @@ class Menu : androidx.fragment.app.Fragment() {
         /*
         adapter de la liste des commandes en fonctions des 2 menu
          */
-        val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
         listOrder!!.layoutManager = layoutManager
-        listOrder!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        listOrder!!.itemAnimator = DefaultItemAnimator()
         listOrder!!.adapter = orderAdapter
         /*
         Permet de quitter le container contenant les différents infos
@@ -120,9 +128,9 @@ class Menu : androidx.fragment.app.Fragment() {
         /*
         adapter de la liste des différentes infos recu du boitier de commande dans la fonction 'decode' de l'activité 1
          */
-        val layoutManager1: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        val layoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context)
         listInfos!!.layoutManager = layoutManager1
-        listInfos!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        listInfos!!.itemAnimator = DefaultItemAnimator()
         listInfos!!.adapter = instructionAdapter
         return v
     }
@@ -144,6 +152,7 @@ class Menu : androidx.fragment.app.Fragment() {
         var deleteButton: ImageButton? = null
         @JvmField
         var pauseButton: Button? = null
+        var chargeButton: Button? = null
         var moduleButton: Button? = null
         var peripheriqueButton: Button? = null
     }
