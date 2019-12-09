@@ -10,6 +10,7 @@ import android.widget.ListView
 import android.widget.Toast
 import com.example.application.Activité_n2.Adapter.ValeurProgrammeAdapter
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionProgramme
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.BDD.DbThread
@@ -26,6 +27,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
     private lateinit var mDbThread: DbThread
     private val mUiHandler = Handler()
     private var valeurReelAndProgDataBase: ValeurReelAndProgDataBase? = null
+    private val changeListener: ChangeFragments = MainActivity.listener!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? { // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_bdd_programme, container, false)
@@ -43,7 +45,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
     Permet de selectionner les informations concernant le mode Programmé pour les réutiliser lors du mode programmé
      */
     override fun onSelection(valeurP: ValeurProgramme?) {
-        val transaction = fragmentManager!!.beginTransaction()
+        //val transaction = fragmentManager!!.beginTransaction()
         val fragment = Programme()
         val bundle = Bundle()
         bundle.putString("vitesse", valeurP!!.speed)
@@ -55,7 +57,8 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         bundle.putBoolean("focus", valeurP.focusStacking!!)
         bundle.putString("tableSteps", valeurP.tableSteps)
         fragment.arguments = bundle
-        transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
+        //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
+        changeListener.onChangeFragment(fragment)
     }
 
     /*
@@ -66,7 +69,8 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
             valeurReelAndProgDataBase?.vPDao()?.delete(valeurP)
         }
         mDbThread.postTask(task)
-        fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+        //fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+        changeListener.onChangeFragment(Programme.programme)
     }
 
     companion object {
@@ -77,9 +81,10 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         val task = kotlinx.coroutines.Runnable {
             val valeurProgrammeData = valeurReelAndProgDataBase?.vPDao()?.getAll()
             mUiHandler.post {
-                if (valeurProgrammeData == null || valeurProgrammeData.size == 0) {
-                    Toast.makeText(MainActivity.context!!, "Rien Dans la BDD", Toast.LENGTH_SHORT)
-                    fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+                if (valeurProgrammeData == null || valeurProgrammeData.isEmpty()) {
+                    Toast.makeText(MainActivity.context!!, "Rien Dans la BDD", Toast.LENGTH_SHORT).show()
+                    //fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+                    changeListener.onChangeFragment(Programme.programme)
                 } else {
                     adapter = ValeurProgrammeAdapter(valeurProgrammeData)
                     mListView.adapter = adapter
@@ -89,5 +94,10 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
             }
         }
         mDbThread.postTask(task)
+    }
+
+    override fun onDestroy() {
+        mDbThread.quit()
+        super.onDestroy()
     }
 }
