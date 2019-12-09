@@ -10,6 +10,7 @@ import android.widget.ListView
 import android.widget.Toast
 import com.example.application.Activité_n2.Adapter.ValeurReelAdapter
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionReel
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.BDD.DbThread
@@ -27,6 +28,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
     private var adapter: ValeurReelAdapter? = null
     private lateinit var mDbThread: DbThread
     private val mUiHandler = Handler()
+    private val changeListener: ChangeFragments = MainActivity.listener!!
     private var valeurReelAndProgDataBase: ValeurReelAndProgDataBase? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? { // Inflate the layout for this fragment
@@ -46,7 +48,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
     Permet de selectionner les informations concernant le mode Temps réel pour les réutiliser lors du mode Temps réel
      */
     override fun onSelection(valeurR: ValeurReel?) {
-        val transaction = fragmentManager!!.beginTransaction()
+        //val transaction = fragmentManager!!.beginTransaction()
         val fragment = TempsReel()
         val bundle = Bundle()
         bundle.putString("vitesse", valeurR!!.speed)
@@ -56,7 +58,8 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         bundle.putBoolean("direction", valeurR.direction!!)
         bundle.putString("tableSteps", valeurR.tableSteps)
         fragment.arguments = bundle
-        transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
+        changeListener.onChangeFragment(fragment)
+        //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
     }
 
     /*

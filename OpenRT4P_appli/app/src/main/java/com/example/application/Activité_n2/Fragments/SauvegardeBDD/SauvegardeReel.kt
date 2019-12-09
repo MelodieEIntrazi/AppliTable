@@ -1,13 +1,13 @@
 package com.example.application.Activité_n2.Fragments.SauvegardeBDD
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.BDD.DbThread
 import com.example.application.BDD.ValeurReelAndProgDataBase
@@ -28,8 +28,8 @@ class SauvegardeReel : androidx.fragment.app.Fragment() {
     var idRentre: EditText? = null
     private var valeurReelAndProgDataBase: ValeurReelAndProgDataBase? = null
     private lateinit var mDbWorkerThread: DbThread
+    private val changeFragments: ChangeFragments = MainActivity.listener!!
 
-    private val mUiHandler = Handler()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sauvegarde_reel, container, false)
         accelerationEditText = arguments!!.getString("AccelerationSaveTempsReel")
@@ -51,21 +51,12 @@ class SauvegardeReel : androidx.fragment.app.Fragment() {
      */
     override fun onStart() {
         super.onStart()
-        //majoutAsyncTask = ajoutBDDVR(this)
         oKButton!!.setOnClickListener {
             val nouvelEnregistrement = ValeurReel(idRentre!!.text.toString(), stepsEditText, accelerationEditText, vitesseEditText, directionSwitch, choix_rotationSwitch, rotation_numberEditText)
-            //val listnew= listOf<ValeurReel>(nouvelEnregistrement)
-            /* nouvelEnregistrement.id = idRentre!!.text.toString()
-             nouvelEnregistrement.acceleration = accelerationEditText
-             nouvelEnregistrement.direction = directionSwitch
-             nouvelEnregistrement.speed = vitesseEditText
-             nouvelEnregistrement.tableSteps = stepsEditText
-             nouvelEnregistrement.rotationNumber = rotation_numberEditText
-             nouvelEnregistrement.rotationMode = choix_rotationSwitch*/
-            //majoutAsyncTask!!.execute(nouvelEnregistrement)
             insertWeatherDataInDb(nouvelEnregistrement)
-            //mDbWorkerThread.quit()
-            fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+            //fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(TempsReel.temps_reel)
+
         }
     }
 
@@ -79,7 +70,6 @@ class SauvegardeReel : androidx.fragment.app.Fragment() {
 
     override fun onDestroy() {
         mDbWorkerThread.quit()
-
         super.onDestroy()
 
     }

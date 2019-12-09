@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.BDD.DbThread
 import com.example.application.BDD.ValeurReelAndProgDataBase
@@ -29,6 +30,7 @@ class SauvegardeProgramme : androidx.fragment.app.Fragment() {
     var idRentre: EditText? = null
     private var valeurReelAndProgDataBase: ValeurReelAndProgDataBase? = null
     private lateinit var mDbWorkerThread: DbThread
+    private val changeFragments: ChangeFragments = MainActivity.listener!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sauvegarde_programme, container, false)
         accelerationEditText = arguments!!.getString("AccelerationSaveProgramme")
@@ -52,23 +54,10 @@ class SauvegardeProgramme : androidx.fragment.app.Fragment() {
      */
     override fun onStart() {
         super.onStart()
-        //majoutAsyncTask = ajoutBDDVP(this)
         oKButton!!.setOnClickListener {
             val nouvelEnregistrement = ValeurProgramme(idRentre!!.text.toString(), stepsEditText, accelerationEditText, vitesseEditText, directionSwitch, pause_between_cameraEditText, camera_numberEditText, frameEditText, focus_stackingSwitch)
-
-            /*nouvelEnregistrement.acceleration = accelerationEditText
-            println("nouvelle enregistrement : " + nouvelEnregistrement.acceleration)
-            nouvelEnregistrement.camera_number = camera_numberEditText
-            nouvelEnregistrement.direction = directionSwitch
-            nouvelEnregistrement.frame = frameEditText
-            nouvelEnregistrement.id = idRentre!!.text.toString()
-            nouvelEnregistrement.speed = vitesseEditText
-            nouvelEnregistrement.tableSteps = stepsEditText
-            nouvelEnregistrement.timeBetweenPhotosNumber = pause_between_cameraEditText
-            nouvelEnregistrement.focusStacking = focus_stackingSwitch*/
-            //ajoutAsyncTask!!.execute(nouvelEnregistrement)
             insertWeatherDataInDb(nouvelEnregistrement)
-            fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(Programme.programme)
 
         }
     }

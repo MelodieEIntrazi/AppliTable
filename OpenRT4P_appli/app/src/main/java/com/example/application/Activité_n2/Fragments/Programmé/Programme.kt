@@ -12,6 +12,8 @@ import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddProgramme
 import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Fragments.SauvegardeBDD.SauvegardeProgramme
+import com.example.application.Activité_n2.Interface.ChangeFragments
+import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
 import com.example.application.Activité_n2.Order.ProgrammeOrder
 import com.example.application.R
@@ -29,6 +31,7 @@ class Programme : androidx.fragment.app.Fragment() {
     var camera_numberInt = 0
     var pause_between_cameraInt = 0
     var Sauv_frag = SauvegardeProgramme()
+    val changeFragments: ChangeFragments = MainActivity.listener!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_programme, container, false)
         peripherique = Peripherique.peripherique
@@ -60,31 +63,35 @@ class Programme : androidx.fragment.app.Fragment() {
             val camera = arguments!!.getString("camera")
             camera_numberEditText.setText(camera)
             directionSwitch.isChecked = arguments!!.getBoolean("direction")
-            focus_stackingSwitch!!.setChecked(arguments!!.getBoolean("focus"))
+            focus_stackingSwitch!!.isChecked = arguments!!.getBoolean("focus")
         }
-        if (focus_stackingSwitch!!.isChecked()) {
-            parametrage!!.setVisibility(View.VISIBLE)
+        if (focus_stackingSwitch!!.isChecked) {
+            parametrage!!.visibility = View.VISIBLE
         } else {
-            parametrage!!.setVisibility(View.INVISIBLE)
+            parametrage!!.visibility = View.INVISIBLE
         }
         /*
         switch du focus stacking
          */focus_stackingSwitch!!.setOnClickListener(View.OnClickListener {
-            if (focus_stackingSwitch!!.isChecked()) {
-                parametrage!!.setVisibility(View.VISIBLE)
+            if (focus_stackingSwitch!!.isChecked) {
+                parametrage!!.visibility = View.VISIBLE
             } else {
-                parametrage!!.setVisibility(View.INVISIBLE)
+                parametrage!!.visibility = View.INVISIBLE
             }
         })
         /*
         parametre utilisé pour le focus stacking et ouvre sur un nouveau fragment
          */parametrage!!.setOnClickListener(View.OnClickListener {
-            parametrage!!.setVisibility(View.VISIBLE)
-            fragmentManager!!.beginTransaction().add(R.id.fragment, FocusParametre.focusParametre).addToBackStack(null).commit()
+            parametrage!!.visibility = View.VISIBLE
+            //fragmentManager!!.beginTransaction().add(R.id.fragment, FocusParametre.focusParametre).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(FocusParametre.focusParametre)
         })
         /*
         Permet de lancer le fragment charger et de récuperer des informations présent dans la bdd
-         */charger.setOnClickListener { fragmentManager!!.beginTransaction().replace(R.id.fragment, BddProgramme.bddProgramme).addToBackStack(null).commit() }
+         */charger.setOnClickListener {
+            //fragmentManager!!.beginTransaction().replace(R.id.fragment, BddProgramme.bddProgramme).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(BddProgramme.bddProgramme)
+        }
         /*
         Permet de le fragment 'sauvegarder' les informations du mode Programmé
          */save.setOnClickListener {
@@ -96,9 +103,10 @@ class Programme : androidx.fragment.app.Fragment() {
             bundle.putString("FrameSaveProgramme", frameEditText.text.toString())
             bundle.putString("CameraSaveProgramme", camera_numberEditText.text.toString())
             bundle.putString("TempsEntrePhotosSaveProgramme", pause_between_cameraEditText.text.toString())
-            bundle.putBoolean("FocusSaveProgramme", focus_stackingSwitch!!.isChecked())
+            bundle.putBoolean("FocusSaveProgramme", focus_stackingSwitch!!.isChecked)
             Sauv_frag.arguments = bundle
-            fragmentManager!!.beginTransaction().replace(R.id.fragment, Sauv_frag).addToBackStack(null).commit()
+            //fragmentManager!!.beginTransaction().replace(R.id.fragment, Sauv_frag).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(Sauv_frag)
         }
         /*
         Envoie les informations du mode programmé au boitier de commande
@@ -110,7 +118,7 @@ class Programme : androidx.fragment.app.Fragment() {
             camera_numberInt = camera_numberEditText.text.toString().toInt()
             pause_between_cameraInt = pause_between_cameraEditText.text.toString().toInt()
             val programmeOrder = ProgrammeOrder(accelerationInt, vitesseInt,
-                    directionSwitch.isChecked, stepsInt, frameInt, camera_numberInt, pause_between_cameraInt, focus_stackingSwitch!!.isChecked())
+                    directionSwitch.isChecked, stepsInt, frameInt, camera_numberInt, pause_between_cameraInt, focus_stackingSwitch!!.isChecked)
             ListOrder.list.add(programmeOrder)
             Menu.orderAdapter!!.notifyDataSetChanged()
             data = ""
@@ -129,16 +137,17 @@ class Programme : androidx.fragment.app.Fragment() {
             data += Integer.toString(frameInt) + ","
             data += Integer.toString(camera_numberInt) + ","
             data += Integer.toString(pause_between_cameraInt) + ","
-            println(focus_stackingSwitch!!.isChecked())
-            data += if (focus_stackingSwitch!!.isChecked()) {
+            println(focus_stackingSwitch!!.isChecked)
+            data += if (focus_stackingSwitch!!.isChecked) {
                 Integer.toString(FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1)
             } else {
                 "0"
             }
             println(data)
             peripherique!!.envoyer(data!!)
-            fragmentManager!!.beginTransaction().remove(programme).addToBackStack(null).commit()
-            focus_stackingSwitch!!.setChecked(false)
+            //fragmentManager!!.beginTransaction().remove(programme).addToBackStack(null).commit()
+            changeFragments.onChangeFragment(Menu.menu)
+            focus_stackingSwitch!!.isChecked = false
         }
         return v
     }
