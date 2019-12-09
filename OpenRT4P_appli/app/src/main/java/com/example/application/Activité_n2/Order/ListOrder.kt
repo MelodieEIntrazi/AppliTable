@@ -1,5 +1,6 @@
 package com.example.application.Activité_n2.Order
 
+import android.view.View
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import java.util.*
 
@@ -20,6 +21,9 @@ object ListOrder {
         }
         if (targetOrder != null) list.remove(targetOrder)
         Menu.orderAdapter!!.notifyDataSetChanged()
+        if (list.size == 0) {
+            Menu.pauseButton!!.visibility = View.INVISIBLE
+        }
     }
 
     @JvmStatic

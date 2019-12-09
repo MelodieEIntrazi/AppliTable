@@ -26,7 +26,7 @@ connecter et decconecter sont appeler lors de la connexion au boitier de command
  */
 class Peripherique(device: BluetoothDevice?, handler: Handler?) {
     var nom: String? = null
-    private var adresse: String? = null
+    var adresse: String? = null
     private var handler: Handler? = null
     private var device: BluetoothDevice? = null
     private var socket: BluetoothSocket? = null
@@ -43,6 +43,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         try {
             sendStream!!.write(data.toByteArray())
             sendStream!!.flush()
+
         } catch (e: IOException) {
             println("<Socket> error send")
             e.printStackTrace()

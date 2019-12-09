@@ -101,12 +101,12 @@ class Connexion : AppCompatActivity() {
                 listePeripheriques!!.addOnItemTouchListener(RecyclerTouch(this, listePeripheriques!!, object : RecyclerTouch.ClickListener {
                     override fun onClick(view: View?, position: Int) {
                         peripherique = peripheriques!![position]
-                        peripheriqueText!!.text = peripherique!!.nom
+                        peripheriqueText!!.text = peripherique!!.adresse
                     }
 
                     override fun onLongClick(view: View?, position: Int) {
                         peripherique = peripheriques!![position]
-                        peripheriqueText!!.text = peripherique!!.nom
+                        peripheriqueText!!.text = peripherique!!.adresse
                     }
 
                 }))

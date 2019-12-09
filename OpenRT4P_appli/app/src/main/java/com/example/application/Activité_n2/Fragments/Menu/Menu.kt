@@ -40,6 +40,9 @@ class Menu : androidx.fragment.app.Fragment() {
         peripherique = Peripherique.peripherique
         val onChangeFragListener: ChangeFragments = MainActivity.listener!!
         //Permet de gerer la pause et d'envoyer l'information au boitier
+        if (ListOrder.list.size != 0) {
+            pauseButton!!.visibility = View.VISIBLE
+        }
         pauseButton!!.setOnClickListener(View.OnClickListener {
             if (ListOrder.list.size != 0) {
                 var data = ""
