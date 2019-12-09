@@ -54,7 +54,10 @@ class Menu : androidx.fragment.app.Fragment() {
             }
         })
         //Permet de gerer le changement de fragment entre le menu et les périphériques
-        peripheriqueButton!!.setOnClickListener(View.OnClickListener { fragmentManager!!.beginTransaction().replace(R.id.fragment, PeripheriqueSelection.peripheriqueSelection).commit() })
+        peripheriqueButton!!.setOnClickListener(View.OnClickListener {
+            //fragmentManager!!.beginTransaction().replace(R.id.fragment, PeripheriqueSelection.peripheriqueSelection).commit()
+            onChangeFragListener.onChangeFragment(PeripheriqueSelection.peripheriqueSelection)
+        })
         /*
         initialise les adapteur présent dans le menu
          */if (orderAdapter == null) {

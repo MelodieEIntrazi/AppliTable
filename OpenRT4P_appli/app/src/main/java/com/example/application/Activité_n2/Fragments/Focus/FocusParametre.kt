@@ -10,6 +10,8 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Adapter.CameraAdapter
 import com.example.application.Activité_n2.Camera.Camera
 import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
+import com.example.application.Activité_n2.Interface.ChangeFragments
+import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -22,10 +24,11 @@ class FocusParametre : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? { // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_focus_parametre, container, false)
+        val onChangeFragListener: ChangeFragments = MainActivity.listener!!
         valider = v.findViewById(R.id.sendFocus)
         reset = v.findViewById(R.id.reset)
         compteur = v.findViewById(R.id.compteur)
-        compteur!!.setEnabled(false)
+        compteur!!.isEnabled = false
         spinnerCamera = v.findViewById(R.id.spinnerFocus)
         listCamera = v.findViewById(R.id.listCamera)
         ajoutPhotoFocus = v.findViewById(R.id.AjoutePhotoFocus)
@@ -68,14 +71,14 @@ class FocusParametre : androidx.fragment.app.Fragment() {
             cameraAdapter!!.nombrePhotoFocus = 1
         }
         val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-        listCamera!!.setLayoutManager(layoutManager)
-        listCamera!!.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
-        listCamera!!.setAdapter(cameraAdapter)
+        listCamera!!.layoutManager = layoutManager
+        listCamera!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        listCamera!!.adapter = cameraAdapter
         val adapter = ArrayAdapter(MaintActivity.context, R.layout.custom_spinner, spinnerCameraItems)
         adapter.setDropDownViewResource(R.layout.custom_spinner)
-        spinnerCamera!!.setAdapter(adapter)
+        spinnerCamera!!.adapter = adapter
         adapter.setNotifyOnChange(true)
-        spinnerCamera!!.setOnItemSelectedListener(object : OnItemSelectedListener {
+        spinnerCamera!!.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 for (i in 0..8) {
                     cameraAdapter!!.nombreDePas[i] = 0
@@ -87,11 +90,11 @@ class FocusParametre : androidx.fragment.app.Fragment() {
                 cameraAdapter!!.notifyDataSetChanged()
                 numeroCamera = indiceCamera[position]
                 compteurPas = 0
-                compteur!!.setText(Integer.toString(compteurPas))
+                compteur!!.text = compteurPas.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
-        })
+        }
         /*
         envoie les paramètres de rotation au boitier de commande qui les envera à la caméra sélectionner par le spinner
          */sendPhotoFocus!!.setOnClickListener(View.OnClickListener {
@@ -113,7 +116,7 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         Permet de réinitialiser les pas lorsque l'on a appuyé sur des touches du magnéto
          */reset!!.setOnClickListener(View.OnClickListener {
             compteurPas = 0
-            compteur!!.setText(Integer.toString(compteurPas))
+            compteur!!.text = "$compteurPas"
         })
         return v
     }

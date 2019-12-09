@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.application.Activité_n1.Connexion
 import com.example.application.Activité_n2.Adapter.PeripheriqueSelectionAdapter
 import com.example.application.Activité_n2.Fragments.Menu.Menu
+import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
 import java.util.*
@@ -28,6 +29,7 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_peripherique_selection, container, false)
+        val onChangeFragListener: ChangeFragments = MainActivity.listener!!
         peripheriquesRecycler = v.findViewById(R.id.peripherique_selection)
         val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         if (listPeripheriques.size == 0) {
@@ -57,7 +59,8 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
             try {
                 envoyer!!.isEnabled = false
                 com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-                fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
+                //fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
+                onChangeFragListener.onChangeFragment(Menu.menu)
 
             } catch (e: KotlinNullPointerException) {
                 Toast.makeText(MainActivity.context, "Veuillez Connecter la table", Toast.LENGTH_SHORT).show()
