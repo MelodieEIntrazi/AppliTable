@@ -101,12 +101,12 @@ class Connexion : AppCompatActivity() {
                 listePeripheriques!!.addOnItemTouchListener(RecyclerTouch(this, listePeripheriques!!, object : RecyclerTouch.ClickListener {
                     override fun onClick(view: View?, position: Int) {
                         peripherique = peripheriques!![position]
-                        peripheriqueText!!.text = peripherique!!.adresse
+                        peripheriqueText!!.text = peripherique!!.nom
                     }
 
                     override fun onLongClick(view: View?, position: Int) {
                         peripherique = peripheriques!![position]
-                        peripheriqueText!!.text = peripherique!!.adresse
+                        peripheriqueText!!.text = peripherique!!.nom
                     }
 
                 }))
@@ -130,13 +130,14 @@ class Connexion : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         if (adaptateurBluetooth != null) {
             adaptateurBluetooth!!.cancelDiscovery()
         }
         if (bluetoothReceiver != null) {
             unregisterReceiver(bluetoothReceiver)
         }
+        super.onDestroy()
+
     }
 
     companion object {

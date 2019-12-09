@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.R
 
@@ -45,5 +46,10 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
 
     override fun onChangeFragment(fragment: Fragment) {
         replaceFragment(fragment, R.id.fragment)
+    }
+
+    override fun onDestroy() {
+        Peripherique.peripherique!!.deconnecter()
+        super.onDestroy()
     }
 }

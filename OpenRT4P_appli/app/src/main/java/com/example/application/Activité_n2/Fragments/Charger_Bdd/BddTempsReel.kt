@@ -70,7 +70,8 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
             valeurReelAndProgDataBase?.vRDao()?.delete(valeurR)
         }
         mDbThread.postTask(task)
-        fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+        //fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+        changeListener.onChangeFragment(TempsReel.temps_reel)
     }
 
     companion object {
@@ -82,8 +83,9 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         val task = Runnable {
             val valeurReelData = valeurReelAndProgDataBase?.vRDao()?.getAll()
             mUiHandler.post {
-                if (valeurReelData == null || valeurReelData.size == 0) {
-                    Toast.makeText(MainActivity.context!!, "No data in cache..!!", Toast.LENGTH_SHORT)
+                if (valeurReelData == null || valeurReelData.isEmpty()) {
+                    Toast.makeText(MainActivity.context!!, "Rien dans la BDD", Toast.LENGTH_SHORT)
+                    changeListener.onChangeFragment(TempsReel.temps_reel)
                 } else {
                     adapter = ValeurReelAdapter(valeurReelData)
                     mListView.adapter = adapter

@@ -19,10 +19,9 @@ class PeripheriqueSelectionAdapter(var context: Context, var listPeripheriques: 
         var imageView: ImageView
         var textPeripherique: TextView
         var switchPeripherique: Switch
-        var indice: Int
+        var indice: Int = adapterPosition
 
         init {
-            indice = adapterPosition
             imageView = v.findViewById(R.id.imageView)
             textPeripherique = v.findViewById(R.id.textPeripheriqueListe)
             switchPeripherique = v.findViewById(R.id.switchPeripheriqueListe)
