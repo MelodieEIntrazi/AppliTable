@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Instructions.InstructionCamera
 import com.example.application.Activité_n2.Instructions.InstructionMoteur
+import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
 import java.io.IOException
 import java.io.InputStream
@@ -204,7 +205,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                 }
             } else if (tableauDonnees[0] == "connexion") {
                 handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post { Toast.makeText(Menu.menu.context, "CONNEXION DES PERIPHERIQUES : SUCCESS", Toast.LENGTH_LONG).show() }
+                handlerUI!!.post { Toast.makeText(MainActivity.context!!, "CONNEXION DES PERIPHERIQUES : SUCCESS", Toast.LENGTH_LONG).show() }
             }
         }
 
