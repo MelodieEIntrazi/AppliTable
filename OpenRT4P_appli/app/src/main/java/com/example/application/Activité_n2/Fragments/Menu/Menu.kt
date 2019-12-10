@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Adapter.InstructionAdapter
 import com.example.application.Activité_n2.Adapter.OrderAdapter
+import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddProgramme
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddTempsReel
 import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
@@ -40,6 +41,7 @@ class Menu : androidx.fragment.app.Fragment() {
         listInfos = v.findViewById<View>(R.id.infosInstructions) as RecyclerView
         pauseButton = v.findViewById(R.id.pause_menu)
         chargeButton = v.findViewById(R.id.charger)
+        chargeButton2 = v.findViewById(R.id.charger2)
         moduleButton = v.findViewById(R.id.modules_menu)
         peripheriqueButton = v.findViewById(R.id.modules_menu)
         peripherique = Peripherique.peripherique
@@ -63,6 +65,9 @@ class Menu : androidx.fragment.app.Fragment() {
         }
         chargeButton!!.setOnClickListener(View.OnClickListener {
             onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
+        })
+        chargeButton2!!.setOnClickListener(View.OnClickListener {
+            onChangeFragListener.onChangeFragment(BddProgramme.bddProgramme)
         })
 
         //Permet de gerer le changement de fragment entre le menu et les périphériques
@@ -154,6 +159,7 @@ class Menu : androidx.fragment.app.Fragment() {
         @JvmField
         var pauseButton: Button? = null
         var chargeButton: Button? = null
+        var chargeButton2: Button? = null
         var moduleButton: Button? = null
         var peripheriqueButton: Button? = null
     }
