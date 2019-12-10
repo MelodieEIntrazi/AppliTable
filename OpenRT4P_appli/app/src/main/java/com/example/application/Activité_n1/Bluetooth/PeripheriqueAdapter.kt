@@ -32,6 +32,8 @@ class PeripheriqueAdapter(var context: Context, var peripheriquesList: List<Peri
     override fun onBindViewHolder(myViewHolder: MyViewHolder, i: Int) {
         val peripherique = peripheriquesList[i]
         myViewHolder.nameText.text = peripherique.nom + " " + "(" + peripherique.adresse + ")"
+
+
     }
 
     override fun getItemCount(): Int {

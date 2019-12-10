@@ -104,6 +104,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
             try {
                 socket!!.close()
             } catch (e: Exception) {
+                println("ERROR " + e.message.toString())
             }
             //socket = null
         }
@@ -142,7 +143,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                 fini = true
             }
             try {
-                sleep(20)
+                interrupt()
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }

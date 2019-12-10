@@ -38,7 +38,7 @@ class CameraAdapter(var context: Context, nombreDePas: IntArray) : androidx.recy
         cameraHolder.position = i
         cameraHolder.nombreDePasText.text = "Nombre de pas entre la photo " + Integer.toString(i + 1) + " et " + Integer.toString(i + 2)
         println(Integer.toString(nombreDePas[i]))
-        cameraHolder.nombreDePasEditText.setText(Integer.toString(FocusParametre.cameraList[numeroCamera].param[i]))
+        cameraHolder.nombreDePasEditText.setText(FocusParametre.cameraList[numeroCamera].param[i].toString())
         cameraHolder.nombreDePasEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {

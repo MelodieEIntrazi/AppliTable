@@ -1,12 +1,15 @@
 package com.example.application.Activité_n2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.application.Activité_n1.Bluetooth.Peripherique
+import com.example.application.Activité_n1.Connexion
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.R
 
@@ -25,6 +28,24 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
         addFragment(menu, R.id.fragment)
     }
 
+    override fun onStart() {
+        Peripherique.peripherique?.let {
+            try {
+                it.envoyer("0,7")
+            } catch (e: KotlinNullPointerException) {
+                println("Error : " + e.message.toString())
+                Toast.makeText(context, "Veuillez connecter la table ", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Connexion::class.java)
+                startActivity(intent)
+                finish()
+
+            }
+
+        }
+
+
+        super.onStart()
+    }
     companion object {
         var listener: ChangeFragments? = null
         var context: Context? = null
@@ -50,6 +71,7 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
 
     override fun onDestroy() {
         Peripherique.peripherique!!.deconnecter()
+        Peripherique.peripherique = null
         super.onDestroy()
     }
 }

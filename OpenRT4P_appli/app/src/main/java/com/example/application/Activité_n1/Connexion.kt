@@ -29,6 +29,7 @@ aller à l'activité suivante
  */
 
 class Connexion : AppCompatActivity() {
+
     private var devices: Set<BluetoothDevice>? = null
     private var adaptateurBluetooth: BluetoothAdapter? = null
     private val bluetoothReceiver: BroadcastReceiver? = null
@@ -52,7 +53,7 @@ class Connexion : AppCompatActivity() {
         btnConnecter = findViewById(R.id.btnConnecter)
 
         btnConnecter!!.setOnClickListener {
-            System.out.println("click sur connecter")
+            println("click sur connecter")
             peripherique!!.connecter()
             while (!peripherique!!.isConnected);
             Peripherique.peripherique = peripherique
@@ -63,12 +64,13 @@ class Connexion : AppCompatActivity() {
 
         adaptateurBluetooth = BluetoothAdapter.getDefaultAdapter()
         if (adaptateurBluetooth == null) {
-            Toast.makeText(applicationContext, "Bluetooth non activé !", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Appareil ne supporte pas le bluetooh", Toast.LENGTH_SHORT).show()
         } else {
             if (!adaptateurBluetooth!!.isEnabled) {
                 Toast.makeText(applicationContext, "Bluetooth non activé !", Toast.LENGTH_SHORT).show()
                 val activeBlueTooth = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivityForResult(activeBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH)
+
                 //bluetoothAdapter.enable();
             } else {
                 Toast.makeText(applicationContext, "Bluetooth activé", Toast.LENGTH_SHORT).show()
@@ -124,6 +126,8 @@ class Connexion : AppCompatActivity() {
             return
         if (resultCode == Activity.RESULT_OK) {
             Toast.makeText(context, "Bluetooth activé", Toast.LENGTH_SHORT).show()
+            finish()
+            startActivity(this.intent)
         } else {
             Toast.makeText(context, "Bluetooth non activé !", Toast.LENGTH_SHORT).show()
         }

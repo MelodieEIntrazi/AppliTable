@@ -20,21 +20,17 @@ import java.util.*
 
 class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var orderArray = ArrayList<Order>()
-    var inflater: LayoutInflater
+    var inflater: LayoutInflater = LayoutInflater.from(context)
 
     internal inner class ProgrammedViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var id = 0
-        var nombre_de_prise: TextView
-        var nombre_de_camera: TextView
-        var focus_stacking: TextView
-        var delete: ImageButton
+        var nombre_de_prise: TextView = v.findViewById(R.id.nombre_de_prise)
+        var nombre_de_camera: TextView = v.findViewById(R.id.nombre_de_camera)
+        var focus_stacking: TextView = v.findViewById(R.id.focus_stacking)
+        var delete: ImageButton = v.findViewById(R.id.delete_programme)
         var infosProgramme: Button
 
         init {
-            nombre_de_prise = v.findViewById(R.id.nombre_de_prise)
-            nombre_de_camera = v.findViewById(R.id.nombre_de_camera)
-            focus_stacking = v.findViewById(R.id.focus_stacking)
-            delete = v.findViewById(R.id.delete_programme)
             delete.setOnClickListener {
                 delete(id)
                 Menu.pauseButton!!.text = "PAUSE"
@@ -54,18 +50,13 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
 
     internal inner class RealTimeViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var id = 0
-        var vitesse: TextView
-        var direction: TextView
-        var temps_tour: TextView
-        var delete: ImageButton
-        var infosTempsReel: Button
+        var vitesse: TextView = v.findViewById(R.id.vitesse)
+        var direction: TextView = v.findViewById(R.id.directionProgramme)
+        var temps_tour: TextView = v.findViewById(R.id.temps_tour)
+        var delete: ImageButton = v.findViewById(R.id.delete_temps_reel)
+        var infosTempsReel: Button = v.findViewById(R.id.infos_temps_reel)
 
         init {
-            vitesse = v.findViewById(R.id.vitesse)
-            direction = v.findViewById(R.id.directionProgramme)
-            temps_tour = v.findViewById(R.id.temps_tour)
-            delete = v.findViewById(R.id.delete_temps_reel)
-            infosTempsReel = v.findViewById(R.id.infos_temps_reel)
             delete.setOnClickListener {
                 delete(id)
                 Menu.pauseButton!!.text = "PAUSE"
@@ -73,7 +64,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
             infosTempsReel.setOnClickListener {
                 Menu.view!!.visibility = View.VISIBLE
                 Menu.listInfos!!.visibility = View.VISIBLE
-                println("id :" + Integer.toString(id))
+                println("id :$id")
                 println(getById(id)!!.listInstruction)
                 Menu.instructionAdapter!!.instructionList = getById(id)!!.listInstruction
                 Menu.deleteButton!!.visibility = View.VISIBLE
@@ -124,27 +115,26 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
                 } else {
                     vProgrammed.focus_stacking.text = "Mode focus stacking désactivé"
                 }
-                vProgrammed.nombre_de_camera.text = Integer.toString(oProgrammed.nombre_de_camera) + " caméra(s)"
-                vProgrammed.nombre_de_prise.text = Integer.toString(oProgrammed.nombre_de_prise) + " prise(s) de vue(s)"
+                vProgrammed.nombre_de_camera.text = oProgrammed.nombre_de_camera.toString() + " caméra(s)"
+                vProgrammed.nombre_de_prise.text = oProgrammed.nombre_de_prise.toString() + " prise(s) de vue(s)"
                 vProgrammed.id = oProgrammed.id
             }
             1 -> {
                 val vRealTime = viewHolder as RealTimeViewHolder
                 val oRealTime = get(i) as TempsReelOrder
-                vRealTime.vitesse.text = Integer.toString(oRealTime.vitesse) + " pas/s"
+                vRealTime.vitesse.text = oRealTime.vitesse.toString() + " pas/s"
                 if (oRealTime.isDirection) {
                     vRealTime.direction.text = "Rotation en sens horaire"
                 } else vRealTime.direction.text = "Rotation en sens antihoraire"
                 if (oRealTime.isTimeMode) {
-                    vRealTime.temps_tour.text = Integer.toString(oRealTime.rotation_number) + " s"
-                } else vRealTime.temps_tour.text = Integer.toString(oRealTime.rotation_number) + " tour(s)"
+                    vRealTime.temps_tour.text = oRealTime.rotation_number.toString() + " s"
+                } else vRealTime.temps_tour.text = oRealTime.rotation_number.toString() + " tour(s)"
                 vRealTime.id = oRealTime.id
             }
         }
     }
 
     init {
-        inflater = LayoutInflater.from(context)
         orderArray.addAll(orderList)
     }
 }

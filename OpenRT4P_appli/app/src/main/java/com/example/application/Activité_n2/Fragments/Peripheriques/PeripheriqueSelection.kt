@@ -31,7 +31,7 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
         val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         if (listPeripheriques.size == 0) {
             println("test")
-            listPeripheriques.add(Peripherique("Moteur", false))
+            listPeripheriques.add(Peripherique("Moteur", true))
             for (i in 0..8) {
                 listPeripheriques.add(Peripherique("Camera " + Integer.toString(i + 1), false))
             }
@@ -42,7 +42,6 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
         if (peripheriqueAdapter == null) {
             peripheriqueAdapter = PeripheriqueSelectionAdapter(MainActivity.context!!, listPeripheriques)
         }
-        //listPeripheriques.add(Peripherique("Moteur", true))
         peripheriquesRecycler!!.layoutManager = layoutManager
         peripheriquesRecycler!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         peripheriquesRecycler!!.adapter = peripheriqueAdapter
@@ -56,7 +55,6 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
             }
             envoyer!!.isEnabled = false
             com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-            //fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
             onChangeFragListener.onChangeFragment(Menu.menu)
 
 

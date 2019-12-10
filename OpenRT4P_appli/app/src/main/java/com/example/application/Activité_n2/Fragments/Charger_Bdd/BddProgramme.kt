@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
 import com.example.application.Activité_n2.Adapter.ValeurProgrammeAdapter
+import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionProgramme
@@ -59,6 +60,37 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         fragment.arguments = bundle
         //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
         changeListener.onChangeFragment(fragment)
+        /* val programmeOrder = ProgrammeOrder(valeurP!!.acceleration!!.toInt(), valeurP.speed!!.toInt(),
+                 valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
+                 valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
+         ListOrder.list.add(programmeOrder)
+         Menu.orderAdapter!!.notifyDataSetChanged()
+         var data = ""
+         data += programmeOrder.id.toString() + ","
+         data += "0" + ","
+         data += valeurP.acceleration + ","
+         data += valeurP.speed + ","
+         data += Integer.toString(stepsInt) + ","
+         data += if (directionSwitch.isChecked) {
+             "1" + ","
+         } else {
+             "0" + ","
+         }
+         data += "-1" + "," //choix rotation
+         data += "-1" + "," //rotation number
+         data += Integer.toString(frameInt) + ","
+         data += Integer.toString(camera_numberInt) + ","
+         data += Integer.toString(pause_between_cameraInt) + ","
+         println(Programme.focus_stackingSwitch!!.isChecked)
+         data += if (Programme.focus_stackingSwitch!!.isChecked) {
+             Integer.toString(FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1)
+         } else {
+             "0"
+         }
+         println(data)
+         peripherique!!.envoyer(data!!)
+         changeFragments.onChangeFragment(Menu.menu)
+         Programme.focus_stackingSwitch!!.isChecked = false*/
     }
 
     /*
@@ -70,7 +102,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         }
         mDbThread.postTask(task)
         //fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
-        changeListener.onChangeFragment(Programme.programme)
+        changeListener.onChangeFragment(Menu.menu)
     }
 
     companion object {
@@ -84,7 +116,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
                 if (valeurProgrammeData == null || valeurProgrammeData.isEmpty()) {
                     Toast.makeText(MainActivity.context!!, "Rien Dans la BDD", Toast.LENGTH_SHORT).show()
                     //fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
-                    changeListener.onChangeFragment(Programme.programme)
+                    changeListener.onChangeFragment(Menu.menu)
                 } else {
                     adapter = ValeurProgrammeAdapter(valeurProgrammeData)
                     mListView.adapter = adapter

@@ -10,7 +10,7 @@ import android.widget.ListView
 import android.widget.Toast
 import com.example.application.Activité_n1.Bluetooth.Peripherique.Companion.peripherique
 import com.example.application.Activité_n2.Adapter.ValeurReelAdapter
-import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
+import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionReel
 import com.example.application.Activité_n2.MainActivity
@@ -65,7 +65,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         val tempsReelOrder = TempsReelOrder(valeurR!!.acceleration!!.toInt(), valeurR.speed!!.toInt(),
                 valeurR.direction!!, valeurR.tableSteps!!.toInt(), valeurR.rotationMode!!, valeurR.rotationNumber!!.toInt())
         ListOrder.list.add(tempsReelOrder)
-        com.example.application.Activité_n2.Fragments.Menu.Menu.orderAdapter!!.notifyDataSetChanged()
+        Menu.orderAdapter!!.notifyDataSetChanged()
         var data = ""
         data += tempsReelOrder.id.toString() + ","
         data += "1" + ","
@@ -89,7 +89,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         data += "-1"
         println(data)
         peripherique!!.envoyer(data)
-        changeListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Menu.Menu.menu)
+        changeListener.onChangeFragment(Menu.menu)
         //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
     }
 
@@ -101,8 +101,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
             valeurReelAndProgDataBase?.vRDao()?.delete(valeurR)
         }
         mDbThread.postTask(task)
-        //fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
-        changeListener.onChangeFragment(TempsReel.temps_reel)
+        changeListener.onChangeFragment(Menu.menu)
     }
 
     companion object {
@@ -116,7 +115,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
             mUiHandler.post {
                 if (valeurReelData == null || valeurReelData.isEmpty()) {
                     Toast.makeText(MainActivity.context!!, "Rien dans la BDD", Toast.LENGTH_SHORT).show()
-                    changeListener.onChangeFragment(TempsReel.temps_reel)
+                    changeListener.onChangeFragment(Menu.menu)
                 } else {
                     adapter = ValeurReelAdapter(valeurReelData)
                     mListView.adapter = adapter
