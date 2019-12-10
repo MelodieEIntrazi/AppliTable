@@ -59,7 +59,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
         init {
             delete.setOnClickListener {
                 delete(id)
-                // Menu.pauseButton!!.text = "PAUSE"
+                Menu.pauseButton!!.text = "PAUSE"
             }
             infosTempsReel.setOnClickListener {
                 Menu.view!!.visibility = View.VISIBLE
