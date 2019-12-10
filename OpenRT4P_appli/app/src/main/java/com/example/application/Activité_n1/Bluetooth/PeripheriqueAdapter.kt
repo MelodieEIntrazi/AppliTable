@@ -15,6 +15,7 @@ Il s'agit d'un 'adapter' pour avoir l'affichage souhaité des différents périp
 class PeripheriqueAdapter(var context: Context, var peripheriquesList: List<Peripherique>) : androidx.recyclerview.widget.RecyclerView.Adapter<MyViewHolder>() {
     var peripheriquesArray = ArrayList<Peripherique>()
     var inflater: LayoutInflater
+    var numeroTable = 0
 
     inner class MyViewHolder internal constructor(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var nameText: TextView
@@ -31,7 +32,15 @@ class PeripheriqueAdapter(var context: Context, var peripheriquesList: List<Peri
 
     override fun onBindViewHolder(myViewHolder: MyViewHolder, i: Int) {
         val peripherique = peripheriquesList[i]
-        myViewHolder.nameText.text = peripherique.nom + " " + "(" + peripherique.adresse + ")"
+        //var n:Int?  = null
+        //myViewHolder.nameText.text = peripherique.nom + " " + "(" + peripherique.adresse + ")"
+        if (peripherique.nom == "BLE Boitier") {
+            numeroTable++
+            peripherique.nom = "Boitier n° " + numeroTable.toString()
+            myViewHolder.nameText.text = peripherique.nom
+        } else {
+            myViewHolder.nameText.text = peripherique.nom
+        }
     }
 
     override fun getItemCount(): Int {
