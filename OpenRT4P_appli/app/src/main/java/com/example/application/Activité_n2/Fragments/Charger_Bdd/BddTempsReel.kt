@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
+import com.example.application.Activité_n1.Bluetooth.Peripherique.Companion.peripherique
 import com.example.application.Activité_n2.Adapter.ValeurReelAdapter
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionReel
 import com.example.application.Activité_n2.MainActivity
+import com.example.application.Activité_n2.Order.ListOrder
+import com.example.application.Activité_n2.Order.TempsReelOrder
 import com.example.application.BDD.DbThread
 import com.example.application.BDD.ValeurReelAndProgDataBase
 import com.example.application.Objets.ValeurReel
@@ -49,16 +52,44 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
      */
     override fun onSelection(valeurR: ValeurReel?) {
         //val transaction = fragmentManager!!.beginTransaction()
-        val fragment = TempsReel()
-        val bundle = Bundle()
-        bundle.putString("vitesse", valeurR!!.speed)
-        bundle.putString("acceleration", valeurR.acceleration)
-        bundle.putString("rotationNumber", valeurR.rotationNumber)
-        bundle.putBoolean("rotationMode", valeurR.rotationMode!!)
-        bundle.putBoolean("direction", valeurR.direction!!)
-        bundle.putString("tableSteps", valeurR.tableSteps)
-        fragment.arguments = bundle
-        changeListener.onChangeFragment(fragment)
+        /* val fragment = TempsReel()
+         val bundle = Bundle()
+         bundle.putString("vitesse", valeurR!!.speed)
+         bundle.putString("acceleration", valeurR.acceleration)
+         bundle.putString("rotationNumber", valeurR.rotationNumber)
+         bundle.putBoolean("rotationMode", valeurR.rotationMode!!)
+         bundle.putBoolean("direction", valeurR.direction!!)
+         bundle.putString("tableSteps", valeurR.tableSteps)
+         fragment.arguments = bundle
+         changeListener.onChangeFragment(fragment)*/
+        val tempsReelOrder = TempsReelOrder(valeurR!!.acceleration!!.toInt(), valeurR.speed!!.toInt(),
+                valeurR.direction!!, valeurR.tableSteps!!.toInt(), valeurR.rotationMode!!, valeurR.rotationNumber!!.toInt())
+        ListOrder.list.add(tempsReelOrder)
+        com.example.application.Activité_n2.Fragments.Menu.Menu.orderAdapter!!.notifyDataSetChanged()
+        var data = ""
+        data += tempsReelOrder.id.toString() + ","
+        data += "1" + ","
+        data += valeurR.acceleration + ","
+        data += valeurR.speed + ","
+        data += valeurR.tableSteps + ","
+        data += if (valeurR.direction == true) {
+            "1" + "," // Time mode
+        } else {
+            "0" + "," // turn mode
+        }
+        data += if (valeurR.rotationMode == true) {
+            "1" + ","
+        } else {
+            "0" + ","
+        }
+        data += valeurR.rotationNumber + ","
+        data += "-1" + ","
+        data += "-1" + ","
+        data += "-1" + ","
+        data += "-1"
+        println(data)
+        peripherique!!.envoyer(data)
+        changeListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Menu.Menu.menu)
         //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
     }
 
@@ -70,7 +101,8 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
             valeurReelAndProgDataBase?.vRDao()?.delete(valeurR)
         }
         mDbThread.postTask(task)
-        fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+        //fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+        changeListener.onChangeFragment(TempsReel.temps_reel)
     }
 
     companion object {
@@ -82,8 +114,9 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         val task = Runnable {
             val valeurReelData = valeurReelAndProgDataBase?.vRDao()?.getAll()
             mUiHandler.post {
-                if (valeurReelData == null || valeurReelData.size == 0) {
-                    Toast.makeText(MainActivity.context!!, "No data in cache..!!", Toast.LENGTH_SHORT)
+                if (valeurReelData == null || valeurReelData.isEmpty()) {
+                    Toast.makeText(MainActivity.context!!, "Rien dans la BDD", Toast.LENGTH_SHORT).show()
+                    changeListener.onChangeFragment(TempsReel.temps_reel)
                 } else {
                     adapter = ValeurReelAdapter(valeurReelData)
                     mListView.adapter = adapter

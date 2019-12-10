@@ -1,13 +1,10 @@
 package com.example.application.Activité_n2.Fragments.Peripheriques
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import com.example.application.Activité_n1.Connexion
 import com.example.application.Activité_n2.Adapter.PeripheriqueSelectionAdapter
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Interface.ChangeFragments
@@ -45,6 +42,7 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
         if (peripheriqueAdapter == null) {
             peripheriqueAdapter = PeripheriqueSelectionAdapter(MainActivity.context!!, listPeripheriques)
         }
+        //listPeripheriques.add(Peripherique("Moteur", true))
         peripheriquesRecycler!!.layoutManager = layoutManager
         peripheriquesRecycler!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         peripheriquesRecycler!!.adapter = peripheriqueAdapter
@@ -56,17 +54,11 @@ class PeripheriqueSelection : androidx.fragment.app.Fragment() {
                     ",1"
                 } else ",0"
             }
-            try {
-                envoyer!!.isEnabled = false
-                com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-                //fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
-                onChangeFragListener.onChangeFragment(Menu.menu)
+            envoyer!!.isEnabled = false
+            com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
+            //fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).commit()
+            onChangeFragListener.onChangeFragment(Menu.menu)
 
-            } catch (e: KotlinNullPointerException) {
-                Toast.makeText(MainActivity.context, "Veuillez Connecter la table", Toast.LENGTH_SHORT).show()
-                val intent = Intent(MainActivity.context, Connexion::class.java)
-                startActivity(intent)
-            }
 
         })
         return v

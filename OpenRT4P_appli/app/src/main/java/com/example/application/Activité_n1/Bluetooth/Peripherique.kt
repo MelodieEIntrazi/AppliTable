@@ -151,7 +151,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         fun decode(data: String) {
             val tableauDonnees = data.split(",").toTypedArray()
             println(data)
-            if (tableauDonnees.size == 0) return
+            if (tableauDonnees.isEmpty()) return
             if (tableauDonnees[0] == "fini") {
                 handlerUI = Handler(Looper.getMainLooper())
                 handlerUI!!.post { Menu.pauseButton!!.text = "PAUSE" }
@@ -229,7 +229,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
             this.handler = handler
         }
         try {
-            socket = device!!.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
+            this.socket = device!!.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
             receiveStream = socket!!.inputStream
             sendStream = socket!!.outputStream
         } catch (e: IOException) {

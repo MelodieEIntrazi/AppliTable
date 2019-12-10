@@ -47,23 +47,24 @@ class Menu : androidx.fragment.app.Fragment() {
         //Permet de gerer la pause et d'envoyer l'information au boitier
         if (ListOrder.list.size != 0) {
             pauseButton!!.visibility = View.VISIBLE
-        }
-        pauseButton!!.setOnClickListener(View.OnClickListener {
-            if (ListOrder.list.size != 0) {
-                var data = ""
-                data += "-1" + "," //id commande pas utile mais necessaire
-                data += "3"
-                if (pauseButton!!.text == "PAUSE") {
-                    pauseButton!!.text = "START"
-                } else {
-                    pauseButton!!.text = "PAUSE"
+            pauseButton!!.setOnClickListener(View.OnClickListener {
+                if (ListOrder.list.size != 0) {
+                    var data = ""
+                    data += "-1" + "," //id commande pas utile mais necessaire
+                    data += "3"
+                    if (pauseButton!!.text == "PAUSE") {
+                        pauseButton!!.text = "START"
+                    } else {
+                        pauseButton!!.text = "PAUSE"
+                    }
+                    peripherique!!.envoyer(data)
                 }
-                peripherique!!.envoyer(data)
-            }
-        })
+            })
+        }
         chargeButton!!.setOnClickListener(View.OnClickListener {
             onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
         })
+
         //Permet de gerer le changement de fragment entre le menu et les périphériques
         peripheriqueButton!!.setOnClickListener(View.OnClickListener {
             //fragmentManager!!.beginTransaction().replace(R.id.fragment, PeripheriqueSelection.peripheriqueSelection).commit()
