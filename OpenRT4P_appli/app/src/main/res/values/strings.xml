@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connecter">Connecter</string>
     <string name="appareil_connecter">Appareil à connecter</string>
+    <string name="mode_programm">Mode programmé</string>
+    <string name="textview">TextView</string>
+    <string name="infos">INFOS</string>
+    <string name="todo">TODO</string>
 </resources>

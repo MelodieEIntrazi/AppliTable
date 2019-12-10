@@ -8,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import com.example.application.Activité_n1.Bluetooth.Peripherique.Companion.peripherique
 import com.example.application.Activité_n2.Adapter.ValeurProgrammeAdapter
+import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionProgramme
 import com.example.application.Activité_n2.MainActivity
+import com.example.application.Activité_n2.Order.ListOrder
+import com.example.application.Activité_n2.Order.ProgrammeOrder
 import com.example.application.BDD.DbThread
 import com.example.application.BDD.ValeurReelAndProgDataBase
 import com.example.application.Objets.ValeurProgramme
@@ -46,21 +50,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
     Permet de selectionner les informations concernant le mode Programmé pour les réutiliser lors du mode programmé
      */
     override fun onSelection(valeurP: ValeurProgramme?) {
-        //val transaction = fragmentManager!!.beginTransaction()
-        val fragment = Programme()
-        val bundle = Bundle()
-        bundle.putString("vitesse", valeurP!!.speed)
-        bundle.putString("acceleration", valeurP.acceleration)
-        bundle.putString("tempsEntrePhotos", valeurP.timeBetweenPhotosNumber)
-        bundle.putString("frame", valeurP.frame)
-        bundle.putString("camera", valeurP.camera_number)
-        bundle.putBoolean("direction", valeurP.direction!!)
-        bundle.putBoolean("focus", valeurP.focusStacking!!)
-        bundle.putString("tableSteps", valeurP.tableSteps)
-        fragment.arguments = bundle
-        //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
-        changeListener.onChangeFragment(fragment)
-        /* val programmeOrder = ProgrammeOrder(valeurP!!.acceleration!!.toInt(), valeurP.speed!!.toInt(),
+        val programmeOrder = ProgrammeOrder(valeurP!!.acceleration!!.toInt(), valeurP.speed!!.toInt(),
                  valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
                  valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
          ListOrder.list.add(programmeOrder)
@@ -70,27 +60,27 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
          data += "0" + ","
          data += valeurP.acceleration + ","
          data += valeurP.speed + ","
-         data += Integer.toString(stepsInt) + ","
-         data += if (directionSwitch.isChecked) {
+        data += valeurP.tableSteps + ","
+        data += if (valeurP.direction == true) {
              "1" + ","
          } else {
              "0" + ","
          }
          data += "-1" + "," //choix rotation
          data += "-1" + "," //rotation number
-         data += Integer.toString(frameInt) + ","
-         data += Integer.toString(camera_numberInt) + ","
-         data += Integer.toString(pause_between_cameraInt) + ","
-         println(Programme.focus_stackingSwitch!!.isChecked)
-         data += if (Programme.focus_stackingSwitch!!.isChecked) {
-             Integer.toString(FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1)
+        data += valeurP.frame + ","
+        data += valeurP.camera_number + ","
+        data += valeurP.timeBetweenPhotosNumber + ","
+        println(valeurP.focusStacking == true)
+        data += if (valeurP.focusStacking == true) {
+            (FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1).toString()
          } else {
              "0"
          }
          println(data)
-         peripherique!!.envoyer(data!!)
-         changeFragments.onChangeFragment(Menu.menu)
-         Programme.focus_stackingSwitch!!.isChecked = false*/
+        peripherique!!.envoyer(data)
+        changeListener.onChangeFragment(Menu.menu)
+        Programme.focus_stackingSwitch!!.isChecked = false
     }
 
     /*
@@ -115,13 +105,12 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
             mUiHandler.post {
                 if (valeurProgrammeData == null || valeurProgrammeData.isEmpty()) {
                     Toast.makeText(MainActivity.context!!, "Rien Dans la BDD", Toast.LENGTH_SHORT).show()
-                    //fragmentManager!!.beginTransaction().replace(R.id.fragment, Programme.programme).addToBackStack(null).commit()
                     changeListener.onChangeFragment(Menu.menu)
                 } else {
                     adapter = ValeurProgrammeAdapter(valeurProgrammeData)
                     mListView.adapter = adapter
                     adapter!!.setmListener(this)
-                    mListView.onItemClickListener = OnItemClickListener { parent, view, position, id -> Toast.makeText(context, position, Toast.LENGTH_SHORT).show() }
+                    mListView.onItemClickListener = OnItemClickListener { _, _, position, _ -> Toast.makeText(context, position, Toast.LENGTH_SHORT).show() }
                 }
             }
         }

@@ -14,23 +14,16 @@ import com.example.application.Activité_n2.Order.ListOrder.getById
 import com.example.application.R
 
 class InstructionAdapter(var context: Context, var instructionList: List<Instruction>?) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-    var inflater: LayoutInflater
+    var inflater: LayoutInflater = LayoutInflater.from(context)
 
     internal inner class InstructionMoteurHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var id = 0
-        var commandeTextMoteur: TextView
-        var instructionTextMoteur: TextView
-        var vitesseTextMoteur: TextView
-        var stepsTextMoteur: TextView
-        var etatMoteur: Button
+        var commandeTextMoteur: TextView = v.findViewById(R.id.commandeTextMoteur)
+        var instructionTextMoteur: TextView = v.findViewById(R.id.InstructionTextMoteur)
+        var vitesseTextMoteur: TextView = v.findViewById(R.id.VitesseTextMoteur)
+        var stepsTextMoteur: TextView = v.findViewById(R.id.StepsTextMoteur)
+        var etatMoteur: Button = v.findViewById(R.id.etatButton)
 
-        init {
-            commandeTextMoteur = v.findViewById(R.id.commandeTextMoteur)
-            instructionTextMoteur = v.findViewById(R.id.InstructionTextMoteur)
-            vitesseTextMoteur = v.findViewById(R.id.VitesseTextMoteur)
-            stepsTextMoteur = v.findViewById(R.id.StepsTextMoteur)
-            etatMoteur = v.findViewById(R.id.etatButton)
-        }
     }
 
     internal inner class InstructionCameraHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
@@ -113,7 +106,4 @@ class InstructionAdapter(var context: Context, var instructionList: List<Instruc
         }
     }
 
-    init {
-        inflater = LayoutInflater.from(context)
-    }
 }
