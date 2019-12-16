@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -32,22 +33,22 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
         setSupportActionBar(toolbar)
 
         // Now get the support action bar
-        val actionBar = supportActionBar
+        actionBars = supportActionBar
 
         // Set toolbar title/app title
-        actionBar!!.title = "Photogrammétrie"
+        actionBars!!.title = "Photogrammétrie"
 
         // Set action bar/toolbar sub title
-        actionBar.subtitle = Peripherique.peripherique?.nom
+        actionBars!!.subtitle = Peripherique.peripherique?.nom
 
         // Set action bar elevation
-        actionBar.elevation = 4.0F
+        actionBars!!.elevation = 4.0F
 
         // Display the app icon in action bar/toolbar
-        actionBar.setDisplayShowHomeEnabled(true)
-        actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.setLogo(R.mipmap.ic_launcher)
-        actionBar.setDisplayUseLogoEnabled(true)
+        actionBars!!.setDisplayShowHomeEnabled(true)
+        actionBars!!.setDisplayHomeAsUpEnabled(true)
+        actionBars!!.setLogo(R.mipmap.ic_launcher)
+        actionBars!!.setDisplayUseLogoEnabled(true)
     }
 
     override fun onStart() {
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
     }
     companion object {
         var listener: ChangeFragments? = null
+        var actionBars: ActionBar? = null
         var context: Context? = null
             private set
     }

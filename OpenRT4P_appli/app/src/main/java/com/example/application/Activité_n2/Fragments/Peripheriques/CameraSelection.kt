@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.application.Activité_n2.Adapter.PeripheriqueSelectionAdapter
+import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
@@ -46,8 +47,9 @@ class CameraSelection : androidx.fragment.app.Fragment() {
             envoyer!!.isEnabled = false
             println("this is DATA Cameras :$data")
             com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-            onChangeFragListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Programmé.Programme.programme)
-
+            //Programme.programme.camera_numberInt = numberofCamera
+            onChangeFragListener.onChangeFragment(Programme.programme)
+            Programme.camera_numberEditText!!.setText(numberofCamera.toString())
         })
 
         return v

@@ -143,7 +143,13 @@ class Menu : androidx.fragment.app.Fragment() {
         listInfos!!.layoutManager = layoutManager1
         listInfos!!.itemAnimator = DefaultItemAnimator()
         listInfos!!.adapter = instructionAdapter
+        MainActivity.actionBars!!.setDisplayHomeAsUpEnabled(false)
         return v
+    }
+
+    override fun onDestroy() {
+        MainActivity.actionBars!!.setDisplayHomeAsUpEnabled(true)
+        super.onDestroy()
     }
 
     companion object {

@@ -45,7 +45,7 @@ class Programme : androidx.fragment.app.Fragment() {
         val directionSwitch = v.findViewById<Switch>(R.id.DirectionProgramme)
         val stepsEditText = v.findViewById<EditText>(R.id.StepsProgramme)
         val frameEditText = v.findViewById<EditText>(R.id.FrameProgramme)
-        val camera_numberEditText = v.findViewById<EditText>(R.id.Camera_Number_Programme)
+        camera_numberEditText = v.findViewById<EditText>(R.id.Camera_Number_Programme)
         val pause_between_cameraEditText = v.findViewById<EditText>(R.id.Pause_between_camera_Programme)
         focus_stackingSwitch = v.findViewById(R.id.Focus_stacking_Programme)
         parametrage = v.findViewById(R.id.parametrage)
@@ -63,7 +63,7 @@ class Programme : androidx.fragment.app.Fragment() {
             val frame = arguments!!.getString("frame")
             frameEditText.setText(frame)
             val camera = arguments!!.getString("camera")
-            camera_numberEditText.setText(camera)
+            camera_numberEditText!!.setText(camera)
             directionSwitch.isChecked = arguments!!.getBoolean("direction")
             focus_stackingSwitch!!.isChecked = arguments!!.getBoolean("focus")
         }
@@ -81,11 +81,10 @@ class Programme : androidx.fragment.app.Fragment() {
                 parametrage!!.visibility = View.INVISIBLE
             }
         })
-        camera_numberEditText.inputType = InputType.TYPE_NULL
-        camera_numberEditText.setOnClickListener {
+        camera_numberEditText!!.inputType = InputType.TYPE_NULL
+        camera_numberEditText!!.setOnClickListener {
             changeFragments.onChangeFragment(CameraSelection.cameraSelection)
         }
-        camera_numberEditText.setText(CameraSelection.numberofCamera.toString())
         /*
         parametre utilisé pour le focus stacking et ouvre sur un nouveau fragment
          */parametrage!!.setOnClickListener(View.OnClickListener {
@@ -108,7 +107,7 @@ class Programme : androidx.fragment.app.Fragment() {
             bundle.putBoolean("DirectionSaveProgramme", directionSwitch.isChecked)
             bundle.putString("TableStepsSaveProgramme", stepsEditText.text.toString())
             bundle.putString("FrameSaveProgramme", frameEditText.text.toString())
-            bundle.putString("CameraSaveProgramme", camera_numberEditText.text.toString())
+            bundle.putString("CameraSaveProgramme", camera_numberEditText!!.text.toString())
             bundle.putString("TempsEntrePhotosSaveProgramme", pause_between_cameraEditText.text.toString())
             bundle.putBoolean("FocusSaveProgramme", focus_stackingSwitch!!.isChecked)
             Sauv_frag.arguments = bundle
@@ -122,7 +121,7 @@ class Programme : androidx.fragment.app.Fragment() {
             vitesseInt = vitesseEditText.text.toString().toInt()
             stepsInt = stepsEditText.text.toString().toInt()
             frameInt = frameEditText.text.toString().toInt()
-            camera_numberInt = camera_numberEditText.text.toString().toInt()
+            camera_numberInt = camera_numberEditText!!.text.toString().toInt()
             pause_between_cameraInt = pause_between_cameraEditText.text.toString().toInt()
             val programmeOrder = ProgrammeOrder(accelerationInt, vitesseInt,
                     directionSwitch.isChecked, stepsInt, frameInt, camera_numberInt, pause_between_cameraInt, focus_stackingSwitch!!.isChecked)
@@ -151,18 +150,6 @@ class Programme : androidx.fragment.app.Fragment() {
                 "0"
             }
 
-            /* if (camera_numberInt !=0 ){
-                 var setcameraData = "0,7,1"
-                 for (i in 0 until camera_numberInt){
-                     setcameraData += ",1"
-
-                 }
-                 for (i in camera_numberInt until 18){
-                     setcameraData +=",0"
-                 }
-                 peripherique!!.envoyer(setcameraData)
-                 println("SETTING CAMERAs $setcameraData")
-             }*/
             println("This is data : $data")
             peripherique!!.envoyer(data!!)
             changeFragments.onChangeFragment(Menu.menu)
@@ -175,5 +162,6 @@ class Programme : androidx.fragment.app.Fragment() {
         var parametrage: Button? = null
         var focus_stackingSwitch: Switch? = null
         var programme = Programme()
+        var camera_numberEditText: EditText? = null
     }
 }

@@ -12,7 +12,6 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique.Companion.per
 import com.example.application.Activité_n2.Adapter.ValeurProgrammeAdapter
 import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.Activité_n2.Fragments.Menu.Menu
-import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionProgramme
 import com.example.application.Activité_n2.MainActivity
@@ -80,7 +79,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
          println(data)
         peripherique!!.envoyer(data)
         changeListener.onChangeFragment(Menu.menu)
-        Programme.focus_stackingSwitch!!.isChecked = false
+        //Programme.focus_stackingSwitch!!.isChecked = false
     }
 
     /*
