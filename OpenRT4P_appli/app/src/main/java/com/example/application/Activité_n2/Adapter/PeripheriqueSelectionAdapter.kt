@@ -28,7 +28,7 @@ class PeripheriqueSelectionAdapter(var context: Context, var listPeripheriques: 
             switchPeripherique.setOnClickListener {
                 println("indice : $adapterPosition")
                 listPeripheriques[adapterPosition].isConnecte = !listPeripheriques[adapterPosition].isConnecte
-                println(listPeripheriques[12].isConnecte)
+                //println(listPeripheriques[12].isConnecte)
             }
             /*
             switchPeripherique.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -37,6 +37,7 @@ class Menu : androidx.fragment.app.Fragment() {
         Companion.view = v.findViewById(R.id.infos)
         deleteButton = v.findViewById(R.id.deleteInfos)
         spinnerMode = v.findViewById(R.id.spinner)
+        spinnerBDD = v.findViewById(R.id.spinnerBDD)
         listOrder = v.findViewById<View>(R.id.orderList) as RecyclerView
         listInfos = v.findViewById<View>(R.id.infosInstructions) as RecyclerView
         pauseButton = v.findViewById(R.id.pause_menu)
@@ -49,32 +50,32 @@ class Menu : androidx.fragment.app.Fragment() {
         //Permet de gerer la pause et d'envoyer l'information au boitier
         if (ListOrder.list.size != 0) {
             pauseButton!!.visibility = View.VISIBLE
-            pauseButton!!.setOnClickListener(View.OnClickListener {
-                if (ListOrder.list.size != 0) {
-                    var data = ""
-                    data += "-1" + "," //id commande pas utile mais necessaire
-                    data += "3"
-                    if (pauseButton!!.text == "PAUSE") {
-                        pauseButton!!.text = "START"
-                    } else {
-                        pauseButton!!.text = "PAUSE"
-                    }
-                    peripherique!!.envoyer(data)
+            pauseButton!!.setOnClickListener {
+                var data = ""
+                data += "-1" + "," //id commande pas utile mais necessaire
+                data += "3"
+                if (pauseButton!!.text == "PAUSE") {
+                    pauseButton!!.text = "START"
+                } else {
+                    pauseButton!!.text = "PAUSE"
                 }
-            })
+                peripherique!!.envoyer(data)
+
+            }
+        } else {
+            pauseButton!!.visibility = View.INVISIBLE
         }
-        chargeButton!!.setOnClickListener(View.OnClickListener {
+        chargeButton!!.setOnClickListener {
             onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
-        })
-        chargeButton2!!.setOnClickListener(View.OnClickListener {
+        }
+        chargeButton2!!.setOnClickListener {
             onChangeFragListener.onChangeFragment(BddProgramme.bddProgramme)
-        })
+        }
 
         //Permet de gerer le changement de fragment entre le menu et les périphériques
-        peripheriqueButton!!.setOnClickListener(View.OnClickListener {
-            //fragmentManager!!.beginTransaction().replace(R.id.fragment, PeripheriqueSelection.peripheriqueSelection).commit()
+        peripheriqueButton!!.setOnClickListener {
             onChangeFragListener.onChangeFragment(PeripheriqueSelection.peripheriqueSelection)
-        })
+        }
         /*
         initialise les adapteur présent dans le menu
          */if (orderAdapter == null) {
@@ -89,10 +90,16 @@ class Menu : androidx.fragment.app.Fragment() {
             spinnerModeItems.add("Mode Temps Réel")
             spinnerFirstTime = false
         }
+        if (spinnerFirstTimeBDD) {
+            spinnerModeItems.add("Choix de la BDD")
+            spinnerModeItems.add("BDD programme")
+            spinnerModeItems.add("BDD réel")
+            spinnerFirstTime = false
+        }
         /*
         spinner custom pour les différents menu et permet de changer de fragments en fonction du bon spinner
          */
-        val adapter = ArrayAdapter(context, R.layout.custom_spinner, spinnerModeItems)
+        val adapter = ArrayAdapter(context!!, R.layout.custom_spinner, spinnerModeItems)
         adapter.setDropDownViewResource(R.layout.custom_spinner)
         spinnerMode!!.adapter = adapter
         adapter.setNotifyOnChange(true)
@@ -100,13 +107,11 @@ class Menu : androidx.fragment.app.Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     1 -> {
-                        //fragmentManager!!.beginTransaction().add(R.id.fragment, Programme.programme).addToBackStack(null).commit()
                         onChangeFragListener.onChangeFragment(Programme.programme)
                         spinnerMode!!.setSelection(0)
                     }
                     2 -> {
                         onChangeFragListener.onChangeFragment(TempsReel.temps_reel)
-                        //fragmentManager!!.beginTransaction().add(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
                         spinnerMode!!.setSelection(0)
                     }
                     else -> {
@@ -125,12 +130,12 @@ class Menu : androidx.fragment.app.Fragment() {
         listOrder!!.adapter = orderAdapter
         /*
         Permet de quitter le container contenant les différents infos
-         */deleteButton!!.setOnClickListener(View.OnClickListener {
+         */deleteButton!!.setOnClickListener {
             instructionAdapter!!.instructionList = null
             deleteButton!!.visibility = View.INVISIBLE
             view?.visibility = View.INVISIBLE
             listInfos!!.visibility = View.INVISIBLE
-        })
+        }
         /*
         adapter de la liste des différentes infos recu du boitier de commande dans la fonction 'decode' de l'activité 1
          */
@@ -146,12 +151,15 @@ class Menu : androidx.fragment.app.Fragment() {
         var spinnerMode: Spinner? = null
         var spinnerModeItems = ArrayList<String>()
         var spinnerFirstTime = true
+        var spinnerBDD: Spinner? = null
+        var spinnerModeItemsBDD = ArrayList<String>()
+        var spinnerFirstTimeBDD = true
         var orderAdapter: OrderAdapter? = null
-        var listOrder: androidx.recyclerview.widget.RecyclerView? = null
+        var listOrder: RecyclerView? = null
         @JvmField
         var instructionAdapter: InstructionAdapter? = null
         @JvmField
-        var listInfos: androidx.recyclerview.widget.RecyclerView? = null
+        var listInfos: RecyclerView? = null
         @JvmField
         var view: View? = null
         @JvmField

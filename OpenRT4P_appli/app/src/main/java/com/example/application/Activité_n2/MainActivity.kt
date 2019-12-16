@@ -3,6 +3,8 @@ package com.example.application.Activité_n2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +14,7 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n1.Connexion
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 /*
 Lancement de cette activité où des fragments seront ajoutés, supprimés, remplacés sur cette activité
@@ -26,12 +29,31 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
         setContentView(R.layout.activity_main)
         val menu: com.example.application.Activité_n2.Fragments.Menu.Menu = com.example.application.Activité_n2.Fragments.Menu.Menu.menu
         addFragment(menu, R.id.fragment)
+        setSupportActionBar(toolbar)
+
+        // Now get the support action bar
+        val actionBar = supportActionBar
+
+        // Set toolbar title/app title
+        actionBar!!.title = "Photogrammétrie"
+
+        // Set action bar/toolbar sub title
+        actionBar.subtitle = Peripherique.peripherique?.nom
+
+        // Set action bar elevation
+        actionBar.elevation = 4.0F
+
+        // Display the app icon in action bar/toolbar
+        actionBar.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.setLogo(R.mipmap.ic_launcher)
+        actionBar.setDisplayUseLogoEnabled(true)
     }
 
     override fun onStart() {
         Peripherique.peripherique?.let {
             try {
-                it.envoyer("0,7")
+                it.envoyer("0,7,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
             } catch (e: KotlinNullPointerException) {
                 println("Error : " + e.message.toString())
                 Toast.makeText(context, "Veuillez connecter la table ", Toast.LENGTH_SHORT).show()
@@ -73,5 +95,28 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
         Peripherique.peripherique!!.deconnecter()
         Peripherique.peripherique = null
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu to use in the action bar
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.deconnection_menu -> {
+                val intent = Intent(this@MainActivity, Connexion::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        replaceFragment(com.example.application.Activité_n2.Fragments.Menu.Menu.menu, R.id.fragment)
+        return super.onSupportNavigateUp()
     }
 }

@@ -10,10 +10,10 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Adapter.CameraAdapter
 import com.example.application.Activité_n2.Camera.Camera
 import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
+import com.example.application.Activité_n2.Fragments.Programmé.Programme.Companion.focus_stackingSwitch
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 /**
@@ -37,12 +37,19 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         /*
         initialisation du spinner permettant de choisir la caméra ayant le focus stacking
          */if (spinnerFirstTime) {
-            for (i in 0..8) {
-                if (PeripheriqueSelection.listPeripheriques[i + 10].isConnecte) {
-                    spinnerCameraItems.add("Camera " + (i + 1))
-                    indiceCamera.add(i)
+            try {
+                for (i in 0..8) {
+                    if (PeripheriqueSelection.listPeripheriques[i + 10].isConnecte) {
+                        spinnerCameraItems.add("Camera " + (i + 1))
+                        indiceCamera.add(i)
+                    }
                 }
+            } catch (e: Exception) {
+                Toast.makeText(MainActivity.context!!, "Veulliez selectionner les caméras pour le focus", Toast.LENGTH_LONG).show()
+                onChangeFragListener.onChangeFragment(PeripheriqueSelection.peripheriqueSelection)
+                focus_stackingSwitch!!.isChecked = false
             }
+
             for (i in 0..8) {
                 cameraList.add(Camera())
             }
@@ -67,14 +74,14 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         /*
         initialiser la liste d'affichage des rotations de caméra
          */if (cameraAdapter == null) {
-            cameraAdapter = CameraAdapter(MaintActivity.context, cameraList[0].param)
+            cameraAdapter = CameraAdapter(MainActivity.context!!, cameraList[0].param)
             cameraAdapter!!.nombrePhotoFocus = 1
         }
         val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         listCamera!!.layoutManager = layoutManager
         listCamera!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         listCamera!!.adapter = cameraAdapter
-        val adapter = ArrayAdapter(MaintActivity.context, R.layout.custom_spinner, spinnerCameraItems)
+        val adapter = ArrayAdapter(MainActivity.context!!, R.layout.custom_spinner, spinnerCameraItems)
         adapter.setDropDownViewResource(R.layout.custom_spinner)
         spinnerCamera!!.adapter = adapter
         adapter.setNotifyOnChange(true)
@@ -101,7 +108,7 @@ class FocusParametre : androidx.fragment.app.Fragment() {
             var data: String? = ""
             data += "-1" + ","
             data += "8" + ","
-            data += Integer.toString(numeroCamera)
+            data += numeroCamera.toString()
             for (i in 0..7) {
                 data += ","
                 data += cameraList[numeroCamera].param[i]
@@ -111,7 +118,7 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         })
         /*
         Sert à retourner sur le fragment mode Programmé une fois que les paramètres du focus stacking ont été choisis
-         */valider!!.setOnClickListener(View.OnClickListener { fragmentManager!!.beginTransaction().remove(focusParametre).addToBackStack(null).commit() })
+         */valider!!.setOnClickListener(View.OnClickListener { onChangeFragListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Programmé.Programme.programme) })
         /*
         Permet de réinitialiser les pas lorsque l'on a appuyé sur des touches du magnéto
          */reset!!.setOnClickListener(View.OnClickListener {

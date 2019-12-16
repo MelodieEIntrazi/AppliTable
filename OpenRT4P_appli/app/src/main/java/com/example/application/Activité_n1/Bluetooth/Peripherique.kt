@@ -143,6 +143,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                 fini = true
             }
             try {
+                handlerUI?.removeCallbacks(this)
                 interrupt()
             } catch (e: InterruptedException) {
                 e.printStackTrace()

@@ -1,6 +1,7 @@
 package com.example.application.Activité_n2.Fragments.Programmé
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddProgramme
 import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.Activité_n2.Fragments.Menu.Menu
+import com.example.application.Activité_n2.Fragments.Peripheriques.CameraSelection
 import com.example.application.Activité_n2.Fragments.SauvegardeBDD.SauvegardeProgramme
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
@@ -79,6 +81,11 @@ class Programme : androidx.fragment.app.Fragment() {
                 parametrage!!.visibility = View.INVISIBLE
             }
         })
+        camera_numberEditText.inputType = InputType.TYPE_NULL
+        camera_numberEditText.setOnClickListener {
+            changeFragments.onChangeFragment(CameraSelection.cameraSelection)
+        }
+        camera_numberEditText.setText(CameraSelection.numberofCamera.toString())
         /*
         parametre utilisé pour le focus stacking et ouvre sur un nouveau fragment
          */parametrage!!.setOnClickListener(View.OnClickListener {
@@ -124,9 +131,9 @@ class Programme : androidx.fragment.app.Fragment() {
             data = ""
             data += programmeOrder.id.toString() + ","
             data += "0" + ","
-            data += Integer.toString(accelerationInt) + ","
-            data += Integer.toString(vitesseInt) + ","
-            data += Integer.toString(stepsInt) + ","
+            data += "$accelerationInt,"
+            data += "$vitesseInt,"
+            data += "$stepsInt,"
             data += if (directionSwitch.isChecked) {
                 "1" + ","
             } else {
@@ -134,18 +141,30 @@ class Programme : androidx.fragment.app.Fragment() {
             }
             data += "-1" + "," //choix rotation
             data += "-1" + "," //rotation number
-            data += Integer.toString(frameInt) + ","
-            data += Integer.toString(camera_numberInt) + ","
-            data += Integer.toString(pause_between_cameraInt) + ","
+            data += "$frameInt,"
+            data += "$camera_numberInt,"
+            data += "$pause_between_cameraInt,"
             println(focus_stackingSwitch!!.isChecked)
             data += if (focus_stackingSwitch!!.isChecked) {
-                Integer.toString(FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1)
+                (FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1).toString()
             } else {
                 "0"
             }
-            println(data)
+
+            /* if (camera_numberInt !=0 ){
+                 var setcameraData = "0,7,1"
+                 for (i in 0 until camera_numberInt){
+                     setcameraData += ",1"
+
+                 }
+                 for (i in camera_numberInt until 18){
+                     setcameraData +=",0"
+                 }
+                 peripherique!!.envoyer(setcameraData)
+                 println("SETTING CAMERAs $setcameraData")
+             }*/
+            println("This is data : $data")
             peripherique!!.envoyer(data!!)
-            //fragmentManager!!.beginTransaction().remove(programme).addToBackStack(null).commit()
             changeFragments.onChangeFragment(Menu.menu)
             focus_stackingSwitch!!.isChecked = false
         }
@@ -155,7 +174,6 @@ class Programme : androidx.fragment.app.Fragment() {
     companion object {
         var parametrage: Button? = null
         var focus_stackingSwitch: Switch? = null
-        @JvmField
         var programme = Programme()
     }
 }

@@ -30,18 +30,18 @@ class Magneto : androidx.fragment.app.Fragment() {
          */forward2!!.setOnClickListener(View.OnClickListener {
             var data: String? = ""
             data += "-1" + "," // idCommande
-            data += Integer.toString(5) + "," //mode magnéto
-            data += Integer.toString(400) + "," //acceleration
-            data += Integer.toString(400) + "," //speed
-            data += Integer.toString(1) + "," //steps
-            data += Integer.toString(0) + "," //direction
+            data += 5.toString() + "," //mode magnéto
+            data += 400.toString() + "," //acceleration
+            data += 400.toString() + "," //speed
+            data += 1.toString() + "," //steps
+            data += 0.toString() + "," //direction
             data += "0" + ","
-            data += Integer.toString(10) + "," //rotation number
-            data += Integer.toString(-1) + "," //Frame
-            data += Integer.toString(-1) + "," //camera number
-            data += Integer.toString(-1) + "," //pause between camera
+            data += 10.toString() + "," //rotation number
+            data += (-1).toString() + "," //Frame
+            data += (-1).toString() + "," //camera number
+            data += (-1).toString() + "," //pause between camera
             data += "0" + "," //focus
-            data += Integer.toString(FocusParametre.numeroCamera) //numero Camera
+            data += FocusParametre.numeroCamera.toString() //numero Camera
             FocusParametre.compteurPas += 10
             FocusParametre.compteur!!.text = FocusParametre.compteurPas.toString()
             Peripherique.peripherique!!.envoyer(data!!)

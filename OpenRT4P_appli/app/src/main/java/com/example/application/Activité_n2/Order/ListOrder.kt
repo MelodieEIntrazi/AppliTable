@@ -20,10 +20,11 @@ object ListOrder {
             if (o.id == id) targetOrder = o
         }
         if (targetOrder != null) list.remove(targetOrder)
-        Menu.orderAdapter!!.notifyDataSetChanged()
         if (list.size == 0) {
             Menu.pauseButton!!.visibility = View.INVISIBLE
         }
+
+        Menu.orderAdapter!!.notifyDataSetChanged()
     }
 
     @JvmStatic
