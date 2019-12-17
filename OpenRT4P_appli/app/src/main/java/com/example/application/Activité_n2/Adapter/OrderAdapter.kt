@@ -33,7 +33,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
         init {
             delete.setOnClickListener {
                 delete(id)
-                Menu.pauseButton!!.text = "PAUSE"
+                Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
             }
             infosProgramme = v.findViewById(R.id.infos_programme)
             infosProgramme.setOnClickListener {
@@ -59,7 +59,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
         init {
             delete.setOnClickListener {
                 delete(id)
-                Menu.pauseButton!!.text = "PAUSE"
+                Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
             }
             infosTempsReel.setOnClickListener {
                 Menu.view!!.visibility = View.VISIBLE

@@ -9,8 +9,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import com.example.application.Activité_n1.Bluetooth.Peripherique
 import com.example.application.Activité_n2.Adapter.CameraAdapter
 import com.example.application.Activité_n2.Camera.Camera
-import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
-import com.example.application.Activité_n2.Fragments.Programmé.Programme.Companion.focus_stackingSwitch
+import com.example.application.Activité_n2.Fragments.Peripheriques.CameraFocusSelection
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
@@ -21,10 +20,11 @@ import java.util.*
  * Permet de programmer le focus stacking des différents caméra connectés au préalable
  */
 class FocusParametre : androidx.fragment.app.Fragment() {
+    val onChangeFragListener: ChangeFragments = MainActivity.listener!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? { // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_focus_parametre, container, false)
-        val onChangeFragListener: ChangeFragments = MainActivity.listener!!
+
         valider = v.findViewById(R.id.sendFocus)
         reset = v.findViewById(R.id.reset)
         compteur = v.findViewById(R.id.compteur)
@@ -36,18 +36,24 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         sendPhotoFocus = v.findViewById(R.id.sendPhotoFocus)
         /*
         initialisation du spinner permettant de choisir la caméra ayant le focus stacking
-         */if (spinnerFirstTime) {
+         */
+
+        return v
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (spinnerFirstTime) {
             try {
                 for (i in 0..8) {
-                    if (PeripheriqueSelection.listPeripheriques[i + 10].isConnecte) {
+                    if (CameraFocusSelection.listCameraFocus[i].isConnecte) {
                         spinnerCameraItems.add("Camera " + (i + 1))
                         indiceCamera.add(i)
                     }
                 }
             } catch (e: Exception) {
                 Toast.makeText(MainActivity.context!!, "Veulliez selectionner les caméras pour le focus", Toast.LENGTH_LONG).show()
-                onChangeFragListener.onChangeFragment(PeripheriqueSelection.peripheriqueSelection)
-                focus_stackingSwitch!!.isChecked = false
+                onChangeFragListener.onChangeFragment(CameraFocusSelection.cameraFocusSelection)
             }
 
             for (i in 0..8) {
@@ -118,14 +124,13 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         })
         /*
         Sert à retourner sur le fragment mode Programmé une fois que les paramètres du focus stacking ont été choisis
-         */valider!!.setOnClickListener(View.OnClickListener { onChangeFragListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Programmé.Programme.programme) })
+         */valider!!.setOnClickListener { onChangeFragListener.onChangeFragment(com.example.application.Activité_n2.Fragments.Programmé.Programme.programme) }
         /*
         Permet de réinitialiser les pas lorsque l'on a appuyé sur des touches du magnéto
-         */reset!!.setOnClickListener(View.OnClickListener {
+         */reset!!.setOnClickListener {
             compteurPas = 0
             compteur!!.text = "$compteurPas"
-        })
-        return v
+        }
     }
 
     companion object {
@@ -144,7 +149,6 @@ class FocusParametre : androidx.fragment.app.Fragment() {
         var sendPhotoFocus: Button? = null
         var spinnerCameraItems = ArrayList<String>()
         var indiceCamera: MutableList<Int> = ArrayList()
-        @JvmField
         var cameraList: MutableList<Camera> = ArrayList()
     }
 }

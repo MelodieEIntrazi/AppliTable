@@ -27,7 +27,7 @@ class Magneto : androidx.fragment.app.Fragment() {
         forward2 = v.findViewById(R.id.forward2)
         /*
         fleche pour avancer de 10 pas dans le sens horaire
-         */forward2!!.setOnClickListener(View.OnClickListener {
+         */forward2!!.setOnClickListener {
             var data: String? = ""
             data += "-1" + "," // idCommande
             data += 5.toString() + "," //mode magnéto
@@ -45,66 +45,66 @@ class Magneto : androidx.fragment.app.Fragment() {
             FocusParametre.compteurPas += 10
             FocusParametre.compteur!!.text = FocusParametre.compteurPas.toString()
             Peripherique.peripherique!!.envoyer(data!!)
-        })
+        }
         /*
         fleche pour avancer de 1 pas dans le sens horaire
-         */forward!!.setOnClickListener(View.OnClickListener {
+         */forward!!.setOnClickListener {
             var data: String? = ""
             data += "-1" + "," // idCommande
-            data += Integer.toString(5) + "," //mode magnéto
-            data += Integer.toString(400) + "," //acceleration
-            data += Integer.toString(400) + "," //speed
-            data += Integer.toString(1) + "," //steps
-            data += Integer.toString(0) + "," //direction
+            data += 5.toString() + "," //mode magnéto
+            data += 400.toString() + "," //acceleration
+            data += 400.toString() + "," //speed
+            data += 1.toString() + "," //steps
+            data += 0.toString() + "," //direction
             data += "0" + ","
-            data += Integer.toString(1) + "," //rotation number
-            data += Integer.toString(-1) + "," //Frame
-            data += Integer.toString(-1) + "," //camera number
-            data += Integer.toString(-1) + "," //pause between camera
+            data += 1.toString() + "," //rotation number
+            data += (-1).toString() + "," //Frame
+            data += (-1).toString() + "," //camera number
+            data += (-1).toString() + "," //pause between camera
             data += "0" + "," //focus
-            data += Integer.toString(FocusParametre.numeroCamera) //numero Camera
+            data += FocusParametre.numeroCamera.toString() //numero Camera
             FocusParametre.compteurPas += 1
             FocusParametre.compteur!!.text = FocusParametre.compteurPas.toString()
             Peripherique.peripherique!!.envoyer(data!!)
-        })
+        }
         /*
         fleche pour avancer de 10 pas dans le sens anti-horaire
-         */backward2!!.setOnClickListener(View.OnClickListener {
+         */backward2!!.setOnClickListener {
             var data: String? = ""
             data += "-1" + "," // idCommande
-            data += Integer.toString(5) + "," //mode magnéto
-            data += Integer.toString(400) + "," //acceleration
-            data += Integer.toString(400) + "," //speed
-            data += Integer.toString(1) + "," //steps
-            data += Integer.toString(1) + "," //direction
+            data += 5.toString() + "," //mode magnéto
+            data += 400.toString() + "," //acceleration
+            data += 400.toString() + "," //speed
+            data += 1.toString() + "," //steps
+            data += 1.toString() + "," //direction
             data += "0" + ","
-            data += Integer.toString(10) + "," //rotation number
-            data += Integer.toString(-1) + "," //Frame
-            data += Integer.toString(-1) + "," //camera number
-            data += Integer.toString(-1) + "," //pause between camera
+            data += 10.toString() + "," //rotation number
+            data += (-1).toString() + "," //Frame
+            data += (-1).toString() + "," //camera number
+            data += (-1).toString() + "," //pause between camera
             data += "0" + "," //focus
-            data += Integer.toString(FocusParametre.numeroCamera) //numero Camera
+            data += FocusParametre.numeroCamera.toString() //numero Camera
             FocusParametre.compteurPas -= 10
             FocusParametre.compteur!!.text = FocusParametre.compteurPas.toString()
             Peripherique.peripherique!!.envoyer(data!!)
-        })
+        }
         /*
         fleche pour avancer de 1 pas dans le sens anti-horaire
          */backward!!.setOnClickListener(View.OnClickListener {
             var data: String? = ""
             data += "-1" + "," // idCommande
-            data += Integer.toString(5) + "," //mode magnéto
-            data += Integer.toString(400) + "," //acceleration
-            data += Integer.toString(400) + "," //speed
-            data += Integer.toString(1) + "," //steps
-            data += Integer.toString(1) + "," //direction
+            data += 5.toString() + "," //mode magnéto
+            data += 400.toString() + "," //acceleration
+            data += 400.toString() + "," //speed
+            data += 1.toString() + "," //steps
+            data += 1.toString() + "," //direction
             data += "0" + "," // choix rotation
-            data += Integer.toString(1) + "," //rotation number
-            data += Integer.toString(-1) + "," //Frame
-            data += Integer.toString(-1) + "," //camera number
-            data += Integer.toString(-1) + "," //pause between camera
+            data += 1.toString() + "," //rotation number
+            data += (-1).toString() + "," //Frame
+            data += (-1).toString() + "," //camera number
+            data += (-1).toString() + "," //pause between camera
             data += "0" + "," //focus
-            data += Integer.toString(FocusParametre.numeroCamera) //numero Camera
+            data += FocusParametre.numeroCamera.toString() //numero Camera
             FocusParametre.compteurPas -= 1
             FocusParametre.compteur!!.text = FocusParametre.compteurPas.toString()
             Peripherique.peripherique!!.envoyer(data!!)

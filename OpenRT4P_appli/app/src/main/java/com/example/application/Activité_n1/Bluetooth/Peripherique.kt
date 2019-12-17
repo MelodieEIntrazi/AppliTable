@@ -11,6 +11,7 @@ import com.example.application.Activité_n2.Instructions.InstructionCamera
 import com.example.application.Activité_n2.Instructions.InstructionMoteur
 import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
+import com.example.application.R
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -156,7 +157,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
             if (tableauDonnees.isEmpty()) return
             if (tableauDonnees[0] == "fini") {
                 handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post { Menu.pauseButton!!.text = "PAUSE" }
+                handlerUI!!.post { Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon) }
                 Menu.instructionAdapter!!.instructionList = null
                 handlerUI = Handler(Looper.getMainLooper())
                 handlerUI!!.post {
@@ -203,7 +204,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                 }
                 handlerUI = Handler(Looper.getMainLooper())
                 handlerUI!!.post {
-                    Menu.pauseButton!!.text = "PAUSE"
+                    Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
                     Menu.instructionAdapter!!.notifyDataSetChanged()
                 }
             } else if (tableauDonnees[0] == "connexion") {

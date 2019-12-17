@@ -38,68 +38,16 @@
 
     <Button
         android:id="@+id/pause_menu"
-        android:layout_width="0dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/pause_icon"
         android:visibility="visible"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@android:color/holo_red_dark"
-        android:text="PAUSE"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerBDD" />
 
-    <Button
-        android:id="@+id/modules_menu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/holo_red_dark"
-        android:text="PERIPHERIQUES"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerBDD" />
 
-    <Button
-        android:id="@+id/charger"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/holo_blue_dark"
-        android:text="@string/charger_temps_r_el"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/charger2"
-        app:layout_constraintTop_toBottomOf="@+id/modules_menu" />
-
-    <Button
-        android:id="@+id/charger2"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/holo_blue_dark"
-        android:text="Charger Programmé"
-        android:textAllCaps="false"
-        app:layout_constraintLeft_toRightOf="@id/charger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/modules_menu" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderList"
@@ -109,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charger">
+        app:layout_constraintTop_toBottomOf="@+id/pause_menu">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -135,7 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modules_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/pause_menu" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/infosInstructions"
@@ -145,7 +93,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/infos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/charger" />
+        app:layout_constraintTop_toBottomOf="@id/pause_menu" />
 
     <ImageButton
         android:id="@+id/deleteInfos"
@@ -162,5 +110,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

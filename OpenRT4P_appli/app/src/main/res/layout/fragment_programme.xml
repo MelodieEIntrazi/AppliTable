@@ -53,7 +53,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/vitesse"
             android:textColor="@android:color/background_light"
@@ -70,7 +69,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/acceleration"
             android:textColor="@android:color/background_light"
@@ -100,7 +98,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/pause_entre_les_cameras"
             android:textColor="@android:color/background_light"
@@ -130,14 +127,14 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/steps"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/send_programme"
             android:text="@string/_200"
-            app:layout_constraintTop_toBottomOf="@+id/StepsTextMoteur" />
+            app:layout_constraintTop_toBottomOf="@id/StepsTextMoteur" />
 
         <Button
             android:id="@+id/save_programme"
@@ -148,7 +145,9 @@
             android:background="@android:color/holo_green_dark"
             android:text="@string/sauvegarder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/charger" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/send_programme"
+            app:layout_constraintTop_toBottomOf="@id/space" />
 
         <Switch
             android:id="@+id/Focus_stacking_Programme"
@@ -193,7 +192,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/nombre_de_camera"
             android:textColor="@android:color/background_light"
@@ -215,17 +213,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/AccelerationProgramme" />
 
-        <Button
-            android:id="@+id/charger"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/holo_blue_dark"
-            android:text="@string/charger"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space" />
 
         <Switch
             android:id="@+id/DirectionProgramme"
@@ -246,30 +233,25 @@
 
         <Button
             android:id="@+id/send_programme"
-            android:layout_width="0dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:background="@android:color/holo_red_dark"
             android:text="@string/envoyer"
-            app:layout_constraintBottom_toBottomOf="@+id/charger"
-            app:layout_constraintEnd_toStartOf="@+id/charger"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/save_programme"
-            app:layout_constraintTop_toTopOf="@+id/charger" />
+            app:layout_constraintTop_toBottomOf="@+id/space" />
 
         <Button
             android:id="@+id/parametrage"
-            android:layout_width="0dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:background="@android:color/holo_orange_dark"
             android:text="@string/param_tres"
-            app:layout_constraintEnd_toEndOf="@+id/send_programme"
-            app:layout_constraintStart_toEndOf="@+id/save_programme"
+            app:layout_constraintBottom_toTopOf="@id/space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Focus_stacking_Programme" />
 
         <TextView
@@ -293,7 +275,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
-            android:autofillHints=""
             android:inputType="number"
             android:hint="@string/frame"
             android:textColor="@android:color/background_light"

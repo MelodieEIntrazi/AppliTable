@@ -31,8 +31,9 @@ class CameraSelection : androidx.fragment.app.Fragment() {
         peripheriquesRecycler!!.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         peripheriquesRecycler!!.adapter = peripheriqueAdapter
         envoyer = v.findViewById(R.id.envoyer_peripherique_selection)
-        envoyer!!.setOnClickListener(View.OnClickListener {
+        envoyer!!.setOnClickListener {
             var data = "0,7,1"
+            var numberofCamera = 0
             for (p in listCamera) {
                 if (p.isConnecte) {
                     data += ",1"
@@ -44,13 +45,15 @@ class CameraSelection : androidx.fragment.app.Fragment() {
             for (i in 0..8) {
                 data += ",0"
             }
+
             envoyer!!.isEnabled = false
-            println("this is DATA Cameras :$data")
+            println("this is DATA Cameras :$data, $numberofCamera")
             com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-            //Programme.programme.camera_numberInt = numberofCamera
             onChangeFragListener.onChangeFragment(Programme.programme)
-            Programme.camera_numberEditText!!.setText(numberofCamera.toString())
-        })
+            Programme.programme.numberOfCamera = numberofCamera.toString()
+
+
+        }
 
         return v
     }
@@ -61,6 +64,5 @@ class CameraSelection : androidx.fragment.app.Fragment() {
         var peripheriqueAdapter: PeripheriqueSelectionAdapter? = null
         var envoyer: Button? = null
         var listCamera = ArrayList<Peripherique>()
-        var numberofCamera = 0
     }
 }

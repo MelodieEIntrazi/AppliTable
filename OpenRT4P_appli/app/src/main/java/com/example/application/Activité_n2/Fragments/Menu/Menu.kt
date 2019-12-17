@@ -14,7 +14,6 @@ import com.example.application.Activité_n2.Adapter.InstructionAdapter
 import com.example.application.Activité_n2.Adapter.OrderAdapter
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddProgramme
 import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddTempsReel
-import com.example.application.Activité_n2.Fragments.Peripheriques.PeripheriqueSelection
 import com.example.application.Activité_n2.Fragments.Programmé.Programme
 import com.example.application.Activité_n2.Fragments.Temps_réel.TempsReel
 import com.example.application.Activité_n2.Interface.ChangeFragments
@@ -41,10 +40,6 @@ class Menu : androidx.fragment.app.Fragment() {
         listOrder = v.findViewById<View>(R.id.orderList) as RecyclerView
         listInfos = v.findViewById<View>(R.id.infosInstructions) as RecyclerView
         pauseButton = v.findViewById(R.id.pause_menu)
-        chargeButton = v.findViewById(R.id.charger)
-        chargeButton2 = v.findViewById(R.id.charger2)
-        moduleButton = v.findViewById(R.id.modules_menu)
-        peripheriqueButton = v.findViewById(R.id.modules_menu)
         peripherique = Peripherique.peripherique
         val onChangeFragListener: ChangeFragments = MainActivity.listener!!
         //Permet de gerer la pause et d'envoyer l'information au boitier
@@ -54,28 +49,18 @@ class Menu : androidx.fragment.app.Fragment() {
                 var data = ""
                 data += "-1" + "," //id commande pas utile mais necessaire
                 data += "3"
-                if (pauseButton!!.text == "PAUSE") {
-                    pauseButton!!.text = "START"
+                if (pauseButton!!.background.constantState == resources.getDrawable(R.drawable.pause_icon).constantState) {
+                    pauseButton!!.setBackgroundResource(R.drawable.play_icon)
                 } else {
-                    pauseButton!!.text = "PAUSE"
+                    pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
                 }
                 peripherique!!.envoyer(data)
-
             }
         } else {
             pauseButton!!.visibility = View.INVISIBLE
         }
-        chargeButton!!.setOnClickListener {
-            onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
-        }
-        chargeButton2!!.setOnClickListener {
-            onChangeFragListener.onChangeFragment(BddProgramme.bddProgramme)
-        }
 
-        //Permet de gerer le changement de fragment entre le menu et les périphériques
-        peripheriqueButton!!.setOnClickListener {
-            onChangeFragListener.onChangeFragment(PeripheriqueSelection.peripheriqueSelection)
-        }
+
         /*
         initialise les adapteur présent dans le menu
          */if (orderAdapter == null) {
@@ -91,18 +76,22 @@ class Menu : androidx.fragment.app.Fragment() {
             spinnerFirstTime = false
         }
         if (spinnerFirstTimeBDD) {
-            spinnerModeItems.add("Choix de la BDD")
-            spinnerModeItems.add("BDD programme")
-            spinnerModeItems.add("BDD réel")
-            spinnerFirstTime = false
+            spinnerModeItemsBDD.add("Choix de la BDD")
+            spinnerModeItemsBDD.add("BDD programme")
+            spinnerModeItemsBDD.add("BDD réel")
+            spinnerFirstTimeBDD = false
         }
         /*
         spinner custom pour les différents menu et permet de changer de fragments en fonction du bon spinner
          */
         val adapter = ArrayAdapter(context!!, R.layout.custom_spinner, spinnerModeItems)
+        val adapter2 = ArrayAdapter(context!!, R.layout.custom_spinner, spinnerModeItemsBDD)
         adapter.setDropDownViewResource(R.layout.custom_spinner)
+        adapter2.setDropDownViewResource(R.layout.custom_spinner)
         spinnerMode!!.adapter = adapter
+        spinnerBDD!!.adapter = adapter2
         adapter.setNotifyOnChange(true)
+        adapter2.setNotifyOnChange(true)
         spinnerMode!!.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
@@ -113,6 +102,25 @@ class Menu : androidx.fragment.app.Fragment() {
                     2 -> {
                         onChangeFragListener.onChangeFragment(TempsReel.temps_reel)
                         spinnerMode!!.setSelection(0)
+                    }
+                    else -> {
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        spinnerBDD!!.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when (position) {
+                    1 -> {
+                        onChangeFragListener.onChangeFragment(BddProgramme.bddProgramme)
+                        spinnerBDD!!.setSelection(0)
+                    }
+                    2 -> {
+                        onChangeFragListener.onChangeFragment(BddTempsReel.bddTempsReel)
+                        spinnerBDD!!.setSelection(0)
                     }
                     else -> {
                     }
@@ -168,13 +176,7 @@ class Menu : androidx.fragment.app.Fragment() {
         var listInfos: RecyclerView? = null
         @JvmField
         var view: View? = null
-        @JvmField
         var deleteButton: ImageButton? = null
-        @JvmField
         var pauseButton: Button? = null
-        var chargeButton: Button? = null
-        var chargeButton2: Button? = null
-        var moduleButton: Button? = null
-        var peripheriqueButton: Button? = null
     }
 }

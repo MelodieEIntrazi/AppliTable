@@ -9,9 +9,9 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import com.example.application.Activité_n1.Bluetooth.Peripherique
-import com.example.application.Activité_n2.Fragments.Charger_Bdd.BddTempsReel
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import com.example.application.Activité_n2.Fragments.SauvegardeBDD.SauvegardeReel
+import com.example.application.Activité_n2.MainActivity
 import com.example.application.Activité_n2.Order.ListOrder
 import com.example.application.Activité_n2.Order.TempsReelOrder
 import com.example.application.R
@@ -32,7 +32,6 @@ class TempsReel : androidx.fragment.app.Fragment() {
         peripherique = Peripherique.peripherique
         val save = v.findViewById<Button>(R.id.save_temps_reel)
         val send = v.findViewById<Button>(R.id.send_temps_reel)
-        val charger = v.findViewById<Button>(R.id.charger)
         val accelerationEditText = v.findViewById<EditText>(R.id.AccelerationTempsReel)
         val vitesseEditText = v.findViewById<EditText>(R.id.VitesseTempsReel)
         val directionSwitch = v.findViewById<Switch>(R.id.DirectionTempsReel)
@@ -55,9 +54,6 @@ class TempsReel : androidx.fragment.app.Fragment() {
             choix_rotationSwitch.isChecked = arguments!!.getBoolean("rotationMode")
         }
         /*
-        Permet de lancer le fragment charger et de récuperer des informations présent dans la bdd
-         */charger.setOnClickListener { fragmentManager!!.beginTransaction().replace(R.id.fragment, BddTempsReel.bddTempsReel).addToBackStack(null).commit() }
-        /*
         Permet de choisir si l'on veut envoyer un nombre de tours de table ou un temps de fonctionnement du moteur
          */choix_rotationSwitch.setOnClickListener {
             if (choix_rotationSwitch.isChecked) {
@@ -77,7 +73,7 @@ class TempsReel : androidx.fragment.app.Fragment() {
             bundle.putString("RotationNumberSaveTempsReel", rotation_numberEditText.text.toString())
             bundle.putBoolean("RotationModeSaveTempsReel", choix_rotationSwitch.isChecked)
             Sauv_frag.arguments = bundle
-            fragmentManager!!.beginTransaction().replace(R.id.fragment, Sauv_frag).addToBackStack(null).commit()
+            MainActivity.listener!!.onChangeFragment(Sauv_frag)
         }
         /*
         Envoie les informations du mode temps réel au boitier de commande
@@ -89,7 +85,7 @@ class TempsReel : androidx.fragment.app.Fragment() {
             val tempsReelOrder = TempsReelOrder(accelerationInt, vitesseInt,
                     directionSwitch.isChecked, stepsInt, choix_rotationSwitch.isChecked, rotation_numberInt)
             ListOrder.list.add(tempsReelOrder)
-            fragmentManager!!.beginTransaction().replace(R.id.fragment, Menu.menu).addToBackStack(null).commit()
+            MainActivity.listener!!.onChangeFragment(Menu.menu)
             Menu.orderAdapter!!.notifyDataSetChanged()
             data = ""
             data += tempsReelOrder.id.toString() + ","

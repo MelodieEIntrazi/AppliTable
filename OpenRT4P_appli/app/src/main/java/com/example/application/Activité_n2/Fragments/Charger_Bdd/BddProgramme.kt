@@ -50,33 +50,49 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
      */
     override fun onSelection(valeurP: ValeurProgramme?) {
         val programmeOrder = ProgrammeOrder(valeurP!!.acceleration!!.toInt(), valeurP.speed!!.toInt(),
-                 valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
-                 valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
-         ListOrder.list.add(programmeOrder)
-         Menu.orderAdapter!!.notifyDataSetChanged()
-         var data = ""
-         data += programmeOrder.id.toString() + ","
-         data += "0" + ","
-         data += valeurP.acceleration + ","
-         data += valeurP.speed + ","
+                valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
+                valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
+        ListOrder.list.add(programmeOrder)
+        Menu.orderAdapter!!.notifyDataSetChanged()
+        if (valeurP.camera_number!!.toInt() != 0) {
+            var dataInit = "0,7,1"
+            for (i in 0 until valeurP.camera_number!!.toInt()) {
+                dataInit += ",1"
+            }
+            for (i in valeurP.camera_number!!.toInt()..8) {
+                dataInit += ",0"
+            }
+            for (i in 0..8) {
+                dataInit += ",0"
+            }
+            println("dataInit")
+            peripherique!!.envoyer(dataInit)
+
+        }
+
+        var data = ""
+        data += programmeOrder.id.toString() + ","
+        data += "0" + ","
+        data += valeurP.acceleration + ","
+        data += valeurP.speed + ","
         data += valeurP.tableSteps + ","
         data += if (valeurP.direction == true) {
-             "1" + ","
-         } else {
-             "0" + ","
-         }
-         data += "-1" + "," //choix rotation
-         data += "-1" + "," //rotation number
+            "1" + ","
+        } else {
+            "0" + ","
+        }
+        data += "-1" + "," //choix rotation
+        data += "-1" + "," //rotation number
         data += valeurP.frame + ","
         data += valeurP.camera_number + ","
         data += valeurP.timeBetweenPhotosNumber + ","
         println(valeurP.focusStacking == true)
         data += if (valeurP.focusStacking == true) {
             (FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1).toString()
-         } else {
-             "0"
-         }
-         println(data)
+        } else {
+            "0"
+        }
+        println(data)
         peripherique!!.envoyer(data)
         changeListener.onChangeFragment(Menu.menu)
         //Programme.focus_stackingSwitch!!.isChecked = false

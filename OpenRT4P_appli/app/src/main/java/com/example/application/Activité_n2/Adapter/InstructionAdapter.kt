@@ -1,5 +1,6 @@
 package com.example.application.Activité_n2.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -28,28 +29,25 @@ class InstructionAdapter(var context: Context, var instructionList: List<Instruc
 
     internal inner class InstructionCameraHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var id = 0
-        var commandeTextCamera: TextView
-        var instructionTextCamera: TextView
-        var numberPhotoTextCamera: TextView
-        var pauseTextCamera: TextView
-        var etatInstructionCamera: Button
+        var commandeTextCamera: TextView = v.findViewById(R.id.commandeTextCamera)
+        var instructionTextCamera: TextView = v.findViewById(R.id.instructionTextCamera)
+        var numberPhotoTextCamera: TextView = v.findViewById(R.id.numberPhotoTextCamera)
+        var pauseTextCamera: TextView = v.findViewById(R.id.PauseTextCamera)
+        var etatInstructionCamera: Button = v.findViewById(R.id.Etat_InstructionCamera)
 
-        init {
-            commandeTextCamera = v.findViewById(R.id.commandeTextCamera)
-            instructionTextCamera = v.findViewById(R.id.instructionTextCamera)
-            numberPhotoTextCamera = v.findViewById(R.id.numberPhotoTextCamera)
-            pauseTextCamera = v.findViewById(R.id.PauseTextCamera)
-            etatInstructionCamera = v.findViewById(R.id.Etat_InstructionCamera)
-        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (instructionList!![position].type == "InstructionMoteur") {
-            0
-        } else if (instructionList!![position].type == "InstructionCamera") {
-            1
-        } else {
-            2
+        return when (instructionList!![position].type) {
+            "InstructionMoteur" -> {
+                0
+            }
+            "InstructionCamera" -> {
+                1
+            }
+            else -> {
+                2
+            }
         }
     }
 
@@ -61,48 +59,61 @@ class InstructionAdapter(var context: Context, var instructionList: List<Instruc
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, i: Int) {
         when (viewHolder.itemViewType) {
             0 -> {
                 val instructionMoteurHolder = viewHolder as InstructionMoteurHolder
                 val instructionMoteur = instructionList!![i] as InstructionMoteur
-                instructionMoteurHolder.commandeTextMoteur.text = "Commande n° " + Integer.toString(instructionMoteur.idCommande)
-                instructionMoteurHolder.instructionTextMoteur.text = "Instruction n° " + Integer.toString(instructionMoteur.idInstruction)
-                instructionMoteurHolder.vitesseTextMoteur.text = "Vitesse : " + Integer.toString(instructionMoteur.vitesse) + "pas/s"
-                instructionMoteurHolder.stepsTextMoteur.text = "Nombre de pas : " + Integer.toString(instructionMoteur.stepsTime)
-                if (instructionMoteur.termine == 2) {
-                    instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.GREEN)
-                } else if (instructionMoteur.termine == 1) {
-                    instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.rgb(255, 128, 0))
-                } else if (instructionMoteur.termine == 0) {
-                    instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.RED)
+                instructionMoteurHolder.commandeTextMoteur.text = "Commande n° " + instructionMoteur.idCommande.toString()
+                instructionMoteurHolder.instructionTextMoteur.text = "Instruction n° " + instructionMoteur.idInstruction.toString()
+                instructionMoteurHolder.vitesseTextMoteur.text = "Vitesse : " + instructionMoteur.vitesse.toString() + "pas/s"
+                instructionMoteurHolder.stepsTextMoteur.text = "Nombre de pas : " + instructionMoteur.stepsTime.toString()
+                when (instructionMoteur.termine) {
+                    2 -> {
+                        instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.GREEN)
+                    }
+                    1 -> {
+                        instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.rgb(255, 128, 0))
+                    }
+                    0 -> {
+                        instructionMoteurHolder.etatMoteur.setBackgroundColor(Color.RED)
+                    }
                 }
             }
             1 -> {
                 val instructionCameraHolder = viewHolder as InstructionCameraHolder
                 val instructionCamera = instructionList!![i] as InstructionCamera
-                instructionCameraHolder.commandeTextCamera.text = "Commande n° " + Integer.toString(instructionCamera.idCommande)
-                instructionCameraHolder.instructionTextCamera.text = "Instruction n° " + Integer.toString(instructionCamera.idInstruction)
-                instructionCameraHolder.numberPhotoTextCamera.text = "Nombre de photos  " + Integer.toString(instructionCamera.frame)
-                instructionCameraHolder.pauseTextCamera.text = "Pause : " + Integer.toString(instructionCamera.pause)
-                if (instructionCamera.termine == 2) {
-                    instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.GREEN)
-                } else if (instructionCamera.termine == 1) {
-                    instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.rgb(255, 128, 0))
-                } else if (instructionCamera.termine == 0) {
-                    instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.RED)
+                instructionCameraHolder.commandeTextCamera.text = "Commande n° " + instructionCamera.idCommande.toString()
+                instructionCameraHolder.instructionTextCamera.text = "Instruction n° " + instructionCamera.idInstruction.toString()
+                instructionCameraHolder.numberPhotoTextCamera.text = "Nombre de photos  " + instructionCamera.frame.toString()
+                instructionCameraHolder.pauseTextCamera.text = "Pause : " + instructionCamera.pause.toString()
+                when (instructionCamera.termine) {
+                    2 -> {
+                        instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.GREEN)
+                    }
+                    1 -> {
+                        instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.rgb(255, 128, 0))
+                    }
+                    0 -> {
+                        instructionCameraHolder.etatInstructionCamera.setBackgroundColor(Color.RED)
+                    }
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (instructionList == null) {
-            0
-        } else if (instructionList!!.size == 0) {
-            0
-        } else {
-            getById(instructionList!![0].idCommande)!!.listInstruction.size
+        return when {
+            instructionList == null -> {
+                0
+            }
+            instructionList!!.isEmpty() -> {
+                0
+            }
+            else -> {
+                getById(instructionList!![0].idCommande)!!.listInstruction.size
+            }
         }
     }
 
