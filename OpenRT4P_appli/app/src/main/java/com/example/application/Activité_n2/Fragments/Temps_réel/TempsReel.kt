@@ -90,9 +90,9 @@ class TempsReel : androidx.fragment.app.Fragment() {
             data = ""
             data += tempsReelOrder.id.toString() + ","
             data += "1" + ","
-            data += Integer.toString(accelerationInt) + ","
-            data += Integer.toString(vitesseInt) + ","
-            data += Integer.toString(stepsInt) + ","
+            data += "$accelerationInt,"
+            data += "$vitesseInt,"
+            data += "$stepsInt,"
             data += if (directionSwitch.isChecked) {
                 "1" + "," // Time mode
             } else {
@@ -103,12 +103,12 @@ class TempsReel : androidx.fragment.app.Fragment() {
             } else {
                 "0" + ","
             }
-            data += Integer.toString(rotation_numberInt) + ","
+            data += "$rotation_numberInt,"
             data += "-1" + ","
             data += "-1" + ","
             data += "-1" + ","
             data += "-1"
-            println(data)
+            println("Data before decode $data")
             peripherique!!.envoyer(data!!)
         }
         return v

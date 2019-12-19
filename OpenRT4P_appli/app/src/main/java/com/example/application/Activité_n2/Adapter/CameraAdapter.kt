@@ -1,5 +1,6 @@
 package com.example.application.Activité_n2.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,23 +22,18 @@ class CameraAdapter(var context: Context, nombreDePas: IntArray) : androidx.recy
 
     inner class CameraHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         var position: Int? = 0
-        var nombreDePasText: TextView
-        var nombreDePasEditText: EditText
-
-        init {
-            nombreDePasText = v.findViewById(R.id.nombreDePasText)
-            nombreDePasEditText = v.findViewById(R.id.nombreDePasEditText)
-        }
+        var nombreDePasText: TextView = v.findViewById(R.id.nombreDePasText)
+        var nombreDePasEditText: EditText = v.findViewById(R.id.nombreDePasEditText)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CameraHolder {
         return CameraHolder(LayoutInflater.from(context).inflate(R.layout.parametre_camera_list, viewGroup, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(cameraHolder: CameraHolder, i: Int) {
         cameraHolder.position = i
-        cameraHolder.nombreDePasText.text = "Nombre de pas entre la photo " + Integer.toString(i + 1) + " et " + Integer.toString(i + 2)
-        println(Integer.toString(nombreDePas[i]))
+        cameraHolder.nombreDePasText.text = "Nombre de pas entre la photo " + (i + 1).toString() + " et " + (i + 2).toString()
         cameraHolder.nombreDePasEditText.setText(FocusParametre.cameraList[numeroCamera].param[i].toString())
         cameraHolder.nombreDePasEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

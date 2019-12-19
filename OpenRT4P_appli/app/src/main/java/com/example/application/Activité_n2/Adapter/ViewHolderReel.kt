@@ -8,7 +8,7 @@ import com.example.application.R
 
 class ViewHolderReel(view: View) {
     @JvmField
-    val id: TextView
+    val id: TextView = view.findViewById(R.id.idReel)
     @JvmField
     val speed: TextView
     @JvmField
@@ -27,7 +27,6 @@ class ViewHolderReel(view: View) {
     val suppression: Button
 
     init {
-        id = view.findViewById(R.id.idReel)
         speed = view.findViewById(R.id.speedReel)
         acceleration = view.findViewById(R.id.accelerationReel)
         nbRotation = view.findViewById(R.id.rotationReel)

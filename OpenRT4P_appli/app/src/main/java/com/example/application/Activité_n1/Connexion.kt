@@ -91,8 +91,6 @@ class Connexion : AppCompatActivity() {
                     noms!!.add("Aucun")
 
 
-                println(peripheriques!!.size)
-
                 listePeripheriques = findViewById<View>(R.id.bluetoothList) as androidx.recyclerview.widget.RecyclerView
                 val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
                 listePeripheriques!!.layoutManager = layoutManager

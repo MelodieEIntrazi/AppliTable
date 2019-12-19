@@ -92,7 +92,6 @@ class ValeurReelAdapter(var mListeVR: List<ValeurReel>) : BaseAdapter(), View.On
             R.id.deleteReel -> {
                 Toast.makeText(MainActivity.context, "Suppression", Toast.LENGTH_LONG).show()
                 if (null != mListener) {
-                    //mBDDAsyncTask.execute(valeurR)
                     mListener!!.onDelete(valeurR)
                 }
             }
@@ -107,6 +106,5 @@ class ValeurReelAdapter(var mListeVR: List<ValeurReel>) : BaseAdapter(), View.On
 
     init {
         mInflater = LayoutInflater.from(BddTempsReel.bddTempsReel.context)
-        //mBDDAsyncTask = SuppressionBDDR()
     }
 }

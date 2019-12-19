@@ -13,18 +13,15 @@ import com.example.application.R
 import java.util.*
 
 class PeripheriqueSelectionAdapter(var context: Context, var listPeripheriques: ArrayList<Peripherique>) : androidx.recyclerview.widget.RecyclerView.Adapter<PeripheriqueHolder>() {
-    var inflater: LayoutInflater
+    var inflater: LayoutInflater = LayoutInflater.from(context)
 
     inner class PeripheriqueHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
-        var imageView: ImageView
-        var textPeripherique: TextView
-        var switchPeripherique: Switch
+        var imageView: ImageView = v.findViewById(R.id.imageView)
+        var textPeripherique: TextView = v.findViewById(R.id.textPeripheriqueListe)
+        var switchPeripherique: Switch = v.findViewById(R.id.switchPeripheriqueListe)
         var indice: Int = adapterPosition
 
         init {
-            imageView = v.findViewById(R.id.imageView)
-            textPeripherique = v.findViewById(R.id.textPeripheriqueListe)
-            switchPeripherique = v.findViewById(R.id.switchPeripheriqueListe)
             switchPeripherique.setOnClickListener {
                 println("indice : $adapterPosition")
                 listPeripheriques[adapterPosition].isConnecte = !listPeripheriques[adapterPosition].isConnecte
@@ -62,7 +59,4 @@ class PeripheriqueSelectionAdapter(var context: Context, var listPeripheriques: 
         return listPeripheriques.size
     }
 
-    init {
-        inflater = LayoutInflater.from(context)
-    }
 }

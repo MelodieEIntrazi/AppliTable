@@ -12,6 +12,7 @@ import com.example.application.Activité_n1.Bluetooth.Peripherique.Companion.per
 import com.example.application.Activité_n2.Adapter.ValeurProgrammeAdapter
 import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.Activité_n2.Fragments.Menu.Menu
+import com.example.application.Activité_n2.Fragments.Peripheriques.CameraSelection
 import com.example.application.Activité_n2.Interface.ChangeFragments
 import com.example.application.Activité_n2.Interface.SelectionProgramme
 import com.example.application.Activité_n2.MainActivity
@@ -54,48 +55,38 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
                 valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
         ListOrder.list.add(programmeOrder)
         Menu.orderAdapter!!.notifyDataSetChanged()
-        if (valeurP.camera_number!!.toInt() != 0) {
-            var dataInit = "0,7,1"
-            for (i in 0 until valeurP.camera_number!!.toInt()) {
-                dataInit += ",1"
-            }
-            for (i in valeurP.camera_number!!.toInt()..8) {
-                dataInit += ",0"
-            }
-            for (i in 0..8) {
-                dataInit += ",0"
-            }
-            println("dataInit")
-            peripherique!!.envoyer(dataInit)
-
-        }
-
-        var data = ""
-        data += programmeOrder.id.toString() + ","
-        data += "0" + ","
-        data += valeurP.acceleration + ","
-        data += valeurP.speed + ","
-        data += valeurP.tableSteps + ","
-        data += if (valeurP.direction == true) {
-            "1" + ","
+        if (valeurP.camera_number!!.toInt() != 0 && CameraSelection.listCamera.size != valeurP.camera_number!!.toInt()) {
+            changeListener.onChangeFragment(CameraSelection.cameraSelection)
         } else {
-            "0" + ","
+            var data = ""
+            data += programmeOrder.id.toString() + ","
+            data += "0" + ","
+            data += valeurP.acceleration + ","
+            data += valeurP.speed + ","
+            data += valeurP.tableSteps + ","
+            data += if (valeurP.direction == true) {
+                "1" + ","
+            } else {
+                "0" + ","
+            }
+            data += "-1" + "," //choix rotation
+            data += "-1" + "," //rotation number
+            data += valeurP.frame + ","
+            data += valeurP.camera_number + ","
+            data += valeurP.timeBetweenPhotosNumber + ","
+            println(valeurP.focusStacking == true)
+            data += if (valeurP.focusStacking == true) {
+                (FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1).toString()
+            } else {
+                "0"
+            }
+            println(data)
+            peripherique!!.envoyer(data)
+            changeListener.onChangeFragment(Menu.menu)
+            //Programme.focus_stackingSwitch!!.isChecked = false
         }
-        data += "-1" + "," //choix rotation
-        data += "-1" + "," //rotation number
-        data += valeurP.frame + ","
-        data += valeurP.camera_number + ","
-        data += valeurP.timeBetweenPhotosNumber + ","
-        println(valeurP.focusStacking == true)
-        data += if (valeurP.focusStacking == true) {
-            (FocusParametre.cameraAdapter!!.nombrePhotoFocus + 1).toString()
-        } else {
-            "0"
-        }
-        println(data)
-        peripherique!!.envoyer(data)
-        changeListener.onChangeFragment(Menu.menu)
-        //Programme.focus_stackingSwitch!!.isChecked = false
+
+
     }
 
     /*

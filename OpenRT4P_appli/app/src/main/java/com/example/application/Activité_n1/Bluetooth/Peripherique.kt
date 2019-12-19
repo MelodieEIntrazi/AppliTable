@@ -153,63 +153,76 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
 
         fun decode(data: String) {
             val tableauDonnees = data.split(",").toTypedArray()
-            println(data)
+            println("Data after decode : $data")
             if (tableauDonnees.isEmpty()) return
-            if (tableauDonnees[0] == "fini") {
-                handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post { Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon) }
-                Menu.instructionAdapter!!.instructionList = null
-                handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post {
-                    ListOrder.delete(tableauDonnees[1].toInt())
-                    Menu.view!!.visibility = View.INVISIBLE
-                    Menu.listInfos!!.visibility = View.INVISIBLE
-                    Menu.deleteButton!!.visibility = View.INVISIBLE
+            when {
+                tableauDonnees[0] == "fini" -> {
+                    handlerUI = Handler(Looper.getMainLooper())
+                    handlerUI!!.post { Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon) }
+                    Menu.instructionAdapter!!.instructionList = null
+                    handlerUI = Handler(Looper.getMainLooper())
+                    handlerUI!!.post {
+                        ListOrder.delete(tableauDonnees[1].toInt())
+                        Menu.statusText!!.text = data
+                        Menu.view!!.visibility = View.INVISIBLE
+                        Menu.listInfos!!.visibility = View.INVISIBLE
+                        Menu.deleteButton!!.visibility = View.INVISIBLE
+                    }
                 }
-            } else if (tableauDonnees[0] == "creation") {
-                val idCommande = tableauDonnees[1].toInt()
-                val idInstruction = tableauDonnees[2].toInt()
-                if (tableauDonnees[3] == "moteur") {
-                    val acceleration = tableauDonnees[4].toInt()
-                    val vitesse = tableauDonnees[5].toInt()
-                    val direction = tableauDonnees[6].toInt()
-                    val choixRotation = tableauDonnees[7].toInt()
-                    val stepsTime = tableauDonnees[8].toInt()
-                    val instructionMoteur = InstructionMoteur(idCommande, idInstruction, acceleration,
-                            vitesse, direction, choixRotation, stepsTime)
-                    ListOrder.getById(idCommande)?.listInstruction!!.add(instructionMoteur)
-                } else if (tableauDonnees[3].contains("camera")) {
-                    val pause = tableauDonnees[5].toInt()
-                    val nombre_de_photos = tableauDonnees[6].toInt()
-                    val instructionCamera = InstructionCamera(idCommande, idInstruction, nombre_de_photos, pause)
-                    ListOrder.getById(idCommande)?.listInstruction!!.add(instructionCamera)
+                tableauDonnees[0] == "creation" -> {
+                    val idCommande = tableauDonnees[1].toInt()
+                    val idInstruction = tableauDonnees[2].toInt()
+                    if (tableauDonnees[3] == "moteur") {
+                        val acceleration = tableauDonnees[4].toInt()
+                        val vitesse = tableauDonnees[5].toInt()
+                        val direction = tableauDonnees[6].toInt()
+                        val choixRotation = tableauDonnees[7].toInt()
+                        val stepsTime = tableauDonnees[8].toInt()
+                        val instructionMoteur = InstructionMoteur(idCommande, idInstruction, acceleration,
+                                vitesse, direction, choixRotation, stepsTime)
+                        ListOrder.getById(idCommande)?.listInstruction!!.add(instructionMoteur)
+                    } else if (tableauDonnees[3].contains("camera")) {
+                        val pause = tableauDonnees[5].toInt()
+                        val nombre_de_photos = tableauDonnees[6].toInt()
+                        val instructionCamera = InstructionCamera(idCommande, idInstruction, nombre_de_photos, pause)
+                        ListOrder.getById(idCommande)?.listInstruction!!.add(instructionCamera)
+                    }
+                    handlerUI = Handler(Looper.getMainLooper())
+                    handlerUI!!.post {
+                        Menu.statusText!!.text = data
+                        Menu.instructionAdapter!!.notifyDataSetChanged()
+                    }
                 }
-                handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post { Menu.instructionAdapter!!.notifyDataSetChanged() }
-            } else if (tableauDonnees[0] == "en cours") {
-                val idCommande = tableauDonnees[1].toInt()
-                val idInstruction = tableauDonnees[2].toInt()
-                if (idCommande == -1) {
-                } else {
-                    if (idInstruction < ListOrder.getById(idCommande)?.listInstruction!!.size) {
-                        if (idCommande >= 1) {
-                            if (ListOrder.getById(idCommande)?.listInstruction!!.size == 1) {
-                                ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 1].termine = 1
-                            } else if (idInstruction > 1) {
-                                ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 2].termine = 2
-                                ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 1].termine = 1
+                tableauDonnees[0] == "en cours" -> {
+                    val idCommande = tableauDonnees[1].toInt()
+                    val idInstruction = tableauDonnees[2].toInt()
+                    if (idCommande == -1) {
+                    } else {
+                        if (idInstruction < ListOrder.getById(idCommande)?.listInstruction!!.size) {
+                            if (idCommande >= 1) {
+                                if (ListOrder.getById(idCommande)?.listInstruction!!.size == 1) {
+                                    ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 1].termine = 1
+                                } else if (idInstruction > 1) {
+                                    ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 2].termine = 2
+                                    ListOrder.getById(idCommande)?.listInstruction!![idInstruction - 1].termine = 1
+                                }
                             }
                         }
                     }
+                    handlerUI = Handler(Looper.getMainLooper())
+                    handlerUI!!.post {
+                        Menu.statusText!!.text = data
+                        Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
+                        Menu.instructionAdapter!!.notifyDataSetChanged()
+                    }
                 }
-                handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post {
-                    Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
-                    Menu.instructionAdapter!!.notifyDataSetChanged()
+                tableauDonnees[0] == "connexion" -> {
+                    handlerUI = Handler(Looper.getMainLooper())
+                    handlerUI!!.post {
+                        Menu.statusText!!.text = data
+                        Toast.makeText(MainActivity.context!!, "CONNEXION DES PERIPHERIQUES : SUCCESS", Toast.LENGTH_LONG).show()
+                    }
                 }
-            } else if (tableauDonnees[0] == "connexion") {
-                handlerUI = Handler(Looper.getMainLooper())
-                handlerUI!!.post { Toast.makeText(MainActivity.context!!, "CONNEXION DES PERIPHERIQUES : SUCCESS", Toast.LENGTH_LONG).show() }
             }
         }
 

@@ -36,7 +36,7 @@ class PeripheriqueAdapter(var context: Context, var peripheriquesList: List<Peri
         //myViewHolder.nameText.text = peripherique.nom + " " + "(" + peripherique.adresse + ")"
         if (peripherique.nom == "BLE Boitier") {
             numeroTable++
-            peripherique.nom = "Boitier n° " + numeroTable.toString()
+            peripherique.nom = "Boitier n° $numeroTable"
             myViewHolder.nameText.text = peripherique.nom
         } else {
             myViewHolder.nameText.text = peripherique.nom

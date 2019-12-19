@@ -34,6 +34,7 @@ class Menu : androidx.fragment.app.Fragment() {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_menu, container, false)
         Companion.view = v.findViewById(R.id.infos)
+        statusText = v.findViewById(R.id.statusProgramme)
         deleteButton = v.findViewById(R.id.deleteInfos)
         spinnerMode = v.findViewById(R.id.spinner)
         spinnerBDD = v.findViewById(R.id.spinnerBDD)
@@ -46,9 +47,7 @@ class Menu : androidx.fragment.app.Fragment() {
         if (ListOrder.list.size != 0) {
             pauseButton!!.visibility = View.VISIBLE
             pauseButton!!.setOnClickListener {
-                var data = ""
-                data += "-1" + "," //id commande pas utile mais necessaire
-                data += "3"
+                val data = "-1,3" //id commande pas utile mais necessaire
                 if (pauseButton!!.background.constantState == resources.getDrawable(R.drawable.pause_icon).constantState) {
                     pauseButton!!.setBackgroundResource(R.drawable.play_icon)
                 } else {
@@ -141,7 +140,7 @@ class Menu : androidx.fragment.app.Fragment() {
          */deleteButton!!.setOnClickListener {
             instructionAdapter!!.instructionList = null
             deleteButton!!.visibility = View.INVISIBLE
-            view?.visibility = View.INVISIBLE
+            Companion.view!!.visibility = View.INVISIBLE
             listInfos!!.visibility = View.INVISIBLE
         }
         /*
@@ -170,6 +169,7 @@ class Menu : androidx.fragment.app.Fragment() {
         var spinnerFirstTimeBDD = true
         var orderAdapter: OrderAdapter? = null
         var listOrder: RecyclerView? = null
+        var statusText: TextView? = null
         @JvmField
         var instructionAdapter: InstructionAdapter? = null
         @JvmField

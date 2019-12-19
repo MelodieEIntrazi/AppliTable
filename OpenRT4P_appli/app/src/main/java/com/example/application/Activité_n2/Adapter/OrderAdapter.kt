@@ -1,5 +1,6 @@
 package com.example.application.Activité_n2.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
             infosProgramme.setOnClickListener {
                 Menu.view!!.visibility = View.VISIBLE
                 Menu.listInfos!!.visibility = View.VISIBLE
-                println("id :" + Integer.toString(id))
+                println("id :" + id.toString())
                 println(getById(id)!!.listInstruction)
                 Menu.instructionAdapter!!.instructionList = getById(id)!!.listInstruction
                 Menu.deleteButton!!.visibility = View.VISIBLE
@@ -74,22 +75,25 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
     }
 
     internal inner class DefaultViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
-        var textView: TextView
+        var textView: TextView = v.findViewById(R.id.commandeTextCamera)
 
         init {
-            textView = v.findViewById(R.id.commandeTextCamera)
             textView.text = "Commande suivante"
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         if (position >= ListOrder.list.size) return -1
-        return if (get(position).type == "ProgrammeOrder") {
-            0
-        } else if (get(position).type == "TempsReelOrder") {
-            1
-        } else {
-            2
+        return when {
+            get(i = position).type == "ProgrammeOrder" -> {
+                0
+            }
+            get(i = position).type == "TempsReelOrder" -> {
+                1
+            }
+            else -> {
+                2
+            }
         }
     }
 
@@ -105,6 +109,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, i: Int) {
         when (viewHolder.itemViewType) {
             0 -> {
