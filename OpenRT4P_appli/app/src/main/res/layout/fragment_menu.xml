@@ -118,7 +118,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="Status"
         android:textColor="@color/white"
         android:textSize="18sp"

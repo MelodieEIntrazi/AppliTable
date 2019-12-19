@@ -50,14 +50,16 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
     Permet de selectionner les informations concernant le mode Programmé pour les réutiliser lors du mode programmé
      */
     override fun onSelection(valeurP: ValeurProgramme?) {
-        val programmeOrder = ProgrammeOrder(valeurP!!.acceleration!!.toInt(), valeurP.speed!!.toInt(),
-                valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
-                valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
-        ListOrder.list.add(programmeOrder)
-        Menu.orderAdapter!!.notifyDataSetChanged()
-        if (valeurP.camera_number!!.toInt() != 0 && CameraSelection.listCamera.size != valeurP.camera_number!!.toInt()) {
+
+        if (valeurP!!.camera_number!!.toInt() != 0 && CameraSelection.numberofCamera != valeurP.camera_number!!.toInt()) {
             changeListener.onChangeFragment(CameraSelection.cameraSelection)
+            CameraSelection.backTopage = 2
         } else {
+            val programmeOrder = ProgrammeOrder(valeurP.acceleration!!.toInt(), valeurP.speed!!.toInt(),
+                    valeurP.direction!!, valeurP.tableSteps!!.toInt(), valeurP.frame!!.toInt(), valeurP.camera_number!!.toInt(),
+                    valeurP.timeBetweenPhotosNumber!!.toInt(), valeurP.focusStacking!!)
+            ListOrder.list.add(programmeOrder)
+            Menu.orderAdapter!!.notifyDataSetChanged()
             var data = ""
             data += programmeOrder.id.toString() + ","
             data += "0" + ","

@@ -76,21 +76,22 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
             private set
     }
 
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().func().commit()
     }
 
-    fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
+    private fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction { add(frameId, fragment) }
     }
 
 
-    fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
+    private fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction { replace(frameId, fragment) }
     }
 
+
     override fun onChangeFragment(fragment: Fragment) {
-        replaceFragment(fragment, R.id.fragment)
+        this.replaceFragment(fragment = fragment, frameId = R.id.fragment)
     }
 
     override fun onDestroy() {

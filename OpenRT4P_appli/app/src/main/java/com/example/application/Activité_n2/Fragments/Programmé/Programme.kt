@@ -87,6 +87,7 @@ class Programme : androidx.fragment.app.Fragment() {
         camera_numberEditText!!.inputType = InputType.TYPE_NULL
         camera_numberEditText!!.setOnClickListener {
             changeFragments.onChangeFragment(CameraSelection.cameraSelection)
+            CameraSelection.backTopage = 1
         }
         /*
         parametre utilisé pour le focus stacking et ouvre sur un nouveau fragment
