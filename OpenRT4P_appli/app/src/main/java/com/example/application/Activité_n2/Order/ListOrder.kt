@@ -4,6 +4,7 @@ import android.view.View
 import com.example.application.Activité_n2.Fragments.Menu.Menu
 import java.util.*
 
+/*Cette Objet permet de d'utiliser des fonctions et d'implémenter la liste des ordres*/
 object ListOrder {
     @JvmField
     var list: MutableList<Order> = ArrayList()
@@ -12,7 +13,6 @@ object ListOrder {
     operator fun get(i: Int): Order {
         return list[i]
     }
-
     @JvmStatic
     fun delete(id: Int) {
         var targetOrder: Order? = null

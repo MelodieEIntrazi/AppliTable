@@ -15,6 +15,7 @@ import com.example.application.Activité_n2.Instructions.InstructionMoteur
 import com.example.application.Activité_n2.Order.ListOrder.getById
 import com.example.application.R
 
+//adapte et affiche les instructions des commandes dans une view définit les fichier XML
 class InstructionAdapter(var context: Context, var instructionList: List<Instruction>?) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
 

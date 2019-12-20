@@ -40,6 +40,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         return "\nNom : $nom\nAdresse : $adresse"
     }
 
+    //Envoie les commandes a la table
     fun envoyer(data: String) {
         try {
             sendStream!!.write(data.toByteArray())
@@ -51,6 +52,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
         }
     }
 
+    //Recherche et communication avec le boitier pour établir une liaison bluetooth
     fun connecter() {
         println("Connecter")
         object : Thread() {
@@ -115,6 +117,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
 
     private inner class TReception internal constructor(var handlerUI: Handler?) : Thread() {
         private var fini = false
+        //Récupére les éléments envoyés par la table
         override fun run() {
             while (!fini) {
                 try {
@@ -151,6 +154,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
             }
         }
 
+        //Fonction qui lie se que la table communique
         fun decode(data: String) {
             val tableauDonnees = data.split(",").toTypedArray()
             println("Data after decode : $data")
@@ -163,7 +167,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                     handlerUI = Handler(Looper.getMainLooper())
                     handlerUI!!.post {
                         ListOrder.delete(tableauDonnees[1].toInt())
-                        Menu.statusText!!.text = data
+                        Menu.statusText!!.text = data//Affiche ce que la table envoie dans le text en bas du fragment Menu
                         Menu.view!!.visibility = View.INVISIBLE
                         Menu.listInfos!!.visibility = View.INVISIBLE
                         Menu.deleteButton!!.visibility = View.INVISIBLE
@@ -189,7 +193,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                     }
                     handlerUI = Handler(Looper.getMainLooper())
                     handlerUI!!.post {
-                        Menu.statusText!!.text = data
+                        Menu.statusText!!.text = data//Affiche ce que la table envoie dans le text en bas du fragment Menu
                         Menu.instructionAdapter!!.notifyDataSetChanged()
                     }
                 }
@@ -211,7 +215,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                     }
                     handlerUI = Handler(Looper.getMainLooper())
                     handlerUI!!.post {
-                        Menu.statusText!!.text = data
+                        Menu.statusText!!.text = data //Affiche ce que la table envoie dans le text en bas du fragment Menu
                         Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
                         Menu.instructionAdapter!!.notifyDataSetChanged()
                         Menu.orderAdapter!!.notifyDataSetChanged()
@@ -220,7 +224,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                 tableauDonnees[0] == "connexion" -> {
                     handlerUI = Handler(Looper.getMainLooper())
                     handlerUI!!.post {
-                        Menu.statusText!!.text = data
+                        Menu.statusText!!.text = data//Affiche ce que la table envoie dans le text en bas du fragment Menu
                         Toast.makeText(MainActivity.context!!, "CONNEXION DES PERIPHERIQUES : SUCCESS", Toast.LENGTH_LONG).show()
                     }
                 }

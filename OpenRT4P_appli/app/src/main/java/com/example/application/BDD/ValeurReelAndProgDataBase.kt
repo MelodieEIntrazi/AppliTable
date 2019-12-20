@@ -9,6 +9,7 @@ import com.example.application.Activité_n2.DAO.ValeurReelDao
 import com.example.application.Objets.ValeurProgramme
 import com.example.application.Objets.ValeurReel
 
+//Crée la bdd avec deux tables différentes
 @Database(entities = [ValeurReel::class, ValeurProgramme::class], version = 8, exportSchema = false)
 abstract class ValeurReelAndProgDataBase : RoomDatabase() {
 

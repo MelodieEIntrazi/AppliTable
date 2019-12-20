@@ -14,6 +14,7 @@ import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
 import java.util.*
 
+//Crée et affiche une liste de caméra afin que l'utlisateur puisse selectionner quelle caméra il souhaite utiliser
 class CameraSelection : androidx.fragment.app.Fragment() {
     private val onChangeFragListener: ChangeFragments = MainActivity.listener!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,11 +59,11 @@ class CameraSelection : androidx.fragment.app.Fragment() {
 
             envoyer!!.isEnabled = false
             println("this is DATA Cameras :$data, $numberofCamera")
-            com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)
-            when (backTopage) {
+            com.example.application.Activité_n1.Bluetooth.Peripherique.peripherique!!.envoyer(data)//Initialise les caméras
+            when (backTopage) {//Retourne a la précédante page
                 1 -> {
                     onChangeFragListener.onChangeFragment(Programme.programme)
-                    Programme.programme.numberOfCamera = numberofCamera.toString()
+                    Programme.programme.numberOfCamera = numberofCamera.toString()//envoie le nombre de caméra a mettre dans la zone de text
                 }
                 2 -> {
                     onChangeFragListener.onChangeFragment(BddProgramme.bddProgramme)

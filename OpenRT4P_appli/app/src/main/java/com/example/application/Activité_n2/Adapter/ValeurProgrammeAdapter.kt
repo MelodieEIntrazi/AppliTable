@@ -10,6 +10,7 @@ import com.example.application.Activité_n2.MainActivity
 import com.example.application.Objets.ValeurProgramme
 import com.example.application.R
 
+//Adapte les élément a afficher afin qu'ils soient affichés dans la view
 class ValeurProgrammeAdapter(var mListeVP: List<ValeurProgramme>?) : BaseAdapter(), View.OnClickListener {
     private val mInflater: LayoutInflater = LayoutInflater.from(BddProgramme.bddProgramme.context)
     private var mListener: SelectionProgramme? = null

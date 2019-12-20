@@ -13,6 +13,7 @@ import com.example.application.Activité_n2.MainActivity
 import com.example.application.R
 import java.util.*
 
+//Crée et affiche une liste de caméra utilisant un focus
 class CameraFocusSelection : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

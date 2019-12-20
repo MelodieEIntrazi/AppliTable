@@ -84,10 +84,11 @@ class Programme : androidx.fragment.app.Fragment() {
                 parametrage!!.visibility = View.INVISIBLE
             }
         }
+        /*Transforme la zone de texte en bouton*/
         camera_numberEditText!!.inputType = InputType.TYPE_NULL
         camera_numberEditText!!.setOnClickListener {
             changeFragments.onChangeFragment(CameraSelection.cameraSelection)
-            CameraSelection.backTopage = 1
+            CameraSelection.backTopage = 1 //Identifie sur quel fragment retourner
         }
         /*
         parametre utilisé pour le focus stacking et ouvre sur un nouveau fragment
@@ -157,6 +158,7 @@ class Programme : androidx.fragment.app.Fragment() {
 
     override fun onStart() {
         super.onStart()
+        /*Place le nombre correcte de caméra en fonction de la selection réalisé par l'utilisateur*/
         if (numberOfCamera.isNotEmpty()) {
             camera_numberEditText!!.setText(numberOfCamera)
         } else {

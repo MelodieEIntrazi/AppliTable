@@ -14,6 +14,7 @@ import com.example.application.Activité_n2.Fragments.Focus.FocusParametre
 import com.example.application.R
 import java.util.*
 
+//Utiliser dans le fragment paramètre afin de pouvoir gérer l'affichage des pas en fonctions des caméras
 class CameraAdapter(var context: Context, nombreDePas: IntArray) : androidx.recyclerview.widget.RecyclerView.Adapter<CameraHolder>() {
     var numeroCamera = 0
     var nombrePhotoFocus = 0

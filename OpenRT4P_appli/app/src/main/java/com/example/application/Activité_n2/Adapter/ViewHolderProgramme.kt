@@ -6,6 +6,7 @@ import android.widget.Switch
 import android.widget.TextView
 import com.example.application.R
 
+//Affichage pour le fragment Programme en fonction de la view
 class ViewHolderProgramme(view: View) {
     val id: TextView
     val speed: TextView

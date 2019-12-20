@@ -10,6 +10,7 @@ import com.example.application.Activité_n2.MainActivity
 import com.example.application.Objets.ValeurReel
 import com.example.application.R
 
+//Adapte les élément a afficher afin qu'ils soient affichés dans la view
 class ValeurReelAdapter(var mListeVR: List<ValeurReel>) : BaseAdapter(), View.OnClickListener {
     private val mInflater: LayoutInflater
     private var mListener: SelectionReel? = null

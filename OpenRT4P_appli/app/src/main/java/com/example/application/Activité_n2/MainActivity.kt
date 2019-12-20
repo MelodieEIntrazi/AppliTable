@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
     override fun onStart() {
         Peripherique.peripherique?.let {
             try {
+                //Initialise automatiquement le moteur
                 it.envoyer("0,7,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
             } catch (e: KotlinNullPointerException) {
                 println("Error : " + e.message.toString())
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity(), ChangeFragments {
             private set
     }
 
+    //Fonctions permettant de changer de Fragment on utilise un listener pour les utiliser dans les fragments
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().func().commit()
     }

@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//Class définissant les attribus du mode valeur Programme
 @Entity(tableName = "ValeurProgramme")
 class ValeurProgramme {
     @PrimaryKey

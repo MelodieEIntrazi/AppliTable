@@ -40,7 +40,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         mDbThread = DbThread("dbThread")
         mDbThread.start()
         valeurReelAndProgDataBase = ValeurReelAndProgDataBase.getDatabase(MainActivity.context!!)
-        fetchWeatherDataFromDb()
+        fetchDataFromDb()
 
 
         return view
@@ -51,17 +51,6 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
     Permet de selectionner les informations concernant le mode Temps réel pour les réutiliser lors du mode Temps réel
      */
     override fun onSelection(valeurR: ValeurReel?) {
-        //val transaction = fragmentManager!!.beginTransaction()
-        /* val fragment = TempsReel()
-         val bundle = Bundle()
-         bundle.putString("vitesse", valeurR!!.speed)
-         bundle.putString("acceleration", valeurR.acceleration)
-         bundle.putString("rotationNumber", valeurR.rotationNumber)
-         bundle.putBoolean("rotationMode", valeurR.rotationMode!!)
-         bundle.putBoolean("direction", valeurR.direction!!)
-         bundle.putString("tableSteps", valeurR.tableSteps)
-         fragment.arguments = bundle
-         changeListener.onChangeFragment(fragment)*/
         val tempsReelOrder = TempsReelOrder(valeurR!!.acceleration!!.toInt(), valeurR.speed!!.toInt(),
                 valeurR.direction!!, valeurR.tableSteps!!.toInt(), valeurR.rotationMode!!, valeurR.rotationNumber!!.toInt())
         ListOrder.list.add(tempsReelOrder)
@@ -90,7 +79,6 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         println(data)
         peripherique!!.envoyer(data)
         changeListener.onChangeFragment(Menu.menu)
-        //transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit()
     }
 
     /*
@@ -109,7 +97,7 @@ class BddTempsReel : androidx.fragment.app.Fragment(), SelectionReel {
         var bddTempsReel = BddTempsReel()
     }
 
-    private fun fetchWeatherDataFromDb() {
+    private fun fetchDataFromDb() {
         val task = Runnable {
             val valeurReelData = valeurReelAndProgDataBase?.vRDao()?.getAll()
             mUiHandler.post {

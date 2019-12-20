@@ -56,16 +56,16 @@ class SauvegardeProgramme : androidx.fragment.app.Fragment() {
         super.onStart()
         oKButton!!.setOnClickListener {
             val nouvelEnregistrement = ValeurProgramme(idRentre!!.text.toString(), stepsEditText, accelerationEditText, vitesseEditText, directionSwitch, pause_between_cameraEditText, camera_numberEditText, frameEditText, focus_stackingSwitch)
-            insertWeatherDataInDb(nouvelEnregistrement)
+            insertDataInDb(nouvelEnregistrement)
             changeFragments.onChangeFragment(Programme.programme)
 
         }
     }
 
     /*
-    Check si la bdd est pleine ou si l'élément existait déja
+    Insert le programme dans la Bdd avec le Dbthread
      */
-    private fun insertWeatherDataInDb(valeurProgramme: ValeurProgramme) {
+    private fun insertDataInDb(valeurProgramme: ValeurProgramme) {
         val task = Runnable { valeurReelAndProgDataBase?.vPDao()?.insert(valeurProgramme) }
         mDbWorkerThread.postTask(task)
     }

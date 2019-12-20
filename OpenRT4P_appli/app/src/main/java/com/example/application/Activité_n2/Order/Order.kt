@@ -3,6 +3,7 @@ package com.example.application.Activité_n2.Order
 import com.example.application.Activité_n2.Instructions.Instruction
 import java.util.*
 
+/*Cette classe permet de lier Programme Order et TempsReelOrder */
 abstract class Order internal constructor() {
     val id: Int
     @JvmField

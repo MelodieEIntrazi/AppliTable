@@ -19,6 +19,7 @@ import com.example.application.Activité_n2.Order.TempsReelOrder
 import com.example.application.R
 import java.util.*
 
+//Adapte et Affiche les commandes envoyé aux boitier dans une view
 class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var orderArray = ArrayList<Order>()
     var inflater: LayoutInflater = LayoutInflater.from(context)

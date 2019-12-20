@@ -40,7 +40,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         mDbThread = DbThread("dbProgThread")
         mDbThread.start()
         valeurReelAndProgDataBase = ValeurReelAndProgDataBase.getDatabase(MainActivity.context!!)
-        fetchWeatherDataFromDb()
+        fetchDataFromDb()
 
         return view
     }
@@ -107,7 +107,7 @@ class BddProgramme : androidx.fragment.app.Fragment(), SelectionProgramme {
         var bddProgramme = BddProgramme()
     }
 
-    private fun fetchWeatherDataFromDb() {
+    private fun fetchDataFromDb() {
         val task = kotlinx.coroutines.Runnable {
             val valeurProgrammeData = valeurReelAndProgDataBase?.vPDao()?.getAll()
             mUiHandler.post {

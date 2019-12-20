@@ -6,6 +6,7 @@ import android.widget.Switch
 import android.widget.TextView
 import com.example.application.R
 
+//Affichage pour le Fragment TempsReel en fonction de la view
 class ViewHolderReel(view: View) {
     @JvmField
     val id: TextView = view.findViewById(R.id.idReel)

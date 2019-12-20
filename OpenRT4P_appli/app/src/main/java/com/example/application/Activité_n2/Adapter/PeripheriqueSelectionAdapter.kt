@@ -12,6 +12,7 @@ import com.example.application.Activité_n2.Fragments.Peripheriques.Peripherique
 import com.example.application.R
 import java.util.*
 
+//Adapte et Affiche la liste des périphériques dans une view
 class PeripheriqueSelectionAdapter(var context: Context, var listPeripheriques: ArrayList<Peripherique>) : androidx.recyclerview.widget.RecyclerView.Adapter<PeripheriqueHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
 

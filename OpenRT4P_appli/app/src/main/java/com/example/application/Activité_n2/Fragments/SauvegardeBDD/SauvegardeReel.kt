@@ -53,17 +53,14 @@ class SauvegardeReel : androidx.fragment.app.Fragment() {
         super.onStart()
         oKButton!!.setOnClickListener {
             val nouvelEnregistrement = ValeurReel(idRentre!!.text.toString(), stepsEditText, accelerationEditText, vitesseEditText, directionSwitch, choix_rotationSwitch, rotation_numberEditText)
-            insertWeatherDataInDb(nouvelEnregistrement)
-            //fragmentManager!!.beginTransaction().replace(R.id.fragment, TempsReel.temps_reel).addToBackStack(null).commit()
+            insertDataInDb(nouvelEnregistrement)
             changeFragments.onChangeFragment(TempsReel.temps_reel)
 
         }
     }
 
-    /*
-    Check si la bdd est pleine ou si l'élément existait déja
-     */
-    private fun insertWeatherDataInDb(valeurReel: ValeurReel) {
+    //Insert le programme réel dans la bdd avec le DbThread
+    private fun insertDataInDb(valeurReel: ValeurReel) {
         val task = Runnable { valeurReelAndProgDataBase?.vRDao()?.insert(valeurReel) }
         mDbWorkerThread.postTask(task)
     }
