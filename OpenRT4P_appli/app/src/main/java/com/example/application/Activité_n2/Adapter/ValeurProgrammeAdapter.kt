@@ -11,7 +11,7 @@ import com.example.application.Objets.ValeurProgramme
 import com.example.application.R
 
 class ValeurProgrammeAdapter(var mListeVP: List<ValeurProgramme>?) : BaseAdapter(), View.OnClickListener {
-    private val mInflater: LayoutInflater
+    private val mInflater: LayoutInflater = LayoutInflater.from(BddProgramme.bddProgramme.context)
     private var mListener: SelectionProgramme? = null
     fun setmListener(mListener: SelectionProgramme?) {
         this.mListener = mListener
@@ -109,7 +109,4 @@ class ValeurProgrammeAdapter(var mListeVP: List<ValeurProgramme>?) : BaseAdapter
         }
     }
 
-    init {
-        mInflater = LayoutInflater.from(BddProgramme.bddProgramme.context)
-    }
 }

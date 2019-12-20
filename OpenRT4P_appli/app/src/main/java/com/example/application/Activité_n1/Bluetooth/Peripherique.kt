@@ -214,6 +214,7 @@ class Peripherique(device: BluetoothDevice?, handler: Handler?) {
                         Menu.statusText!!.text = data
                         Menu.pauseButton!!.setBackgroundResource(R.drawable.pause_icon)
                         Menu.instructionAdapter!!.notifyDataSetChanged()
+                        Menu.orderAdapter!!.notifyDataSetChanged()
                     }
                 }
                 tableauDonnees[0] == "connexion" -> {

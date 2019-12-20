@@ -40,7 +40,7 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
             infosProgramme.setOnClickListener {
                 Menu.view!!.visibility = View.VISIBLE
                 Menu.listInfos!!.visibility = View.VISIBLE
-                println("id :" + id.toString())
+                println("id :$id")
                 println(getById(id)!!.listInstruction)
                 Menu.instructionAdapter!!.instructionList = getById(id)!!.listInstruction
                 Menu.deleteButton!!.visibility = View.VISIBLE
@@ -84,11 +84,11 @@ class OrderAdapter(var context: Context, var orderList: List<Order>) : androidx.
 
     override fun getItemViewType(position: Int): Int {
         if (position >= ListOrder.list.size) return -1
-        return when {
-            get(i = position).type == "ProgrammeOrder" -> {
+        return when (get(i = position).type) {
+            "ProgrammeOrder" -> {
                 0
             }
-            get(i = position).type == "TempsReelOrder" -> {
+            "TempsReelOrder" -> {
                 1
             }
             else -> {

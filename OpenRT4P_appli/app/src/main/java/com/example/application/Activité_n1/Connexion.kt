@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,7 @@ class Connexion : AppCompatActivity() {
     private var listePeripheriques: androidx.recyclerview.widget.RecyclerView? = null
 
     private var peripheriqueText: TextView? = null
+    private var progressBar: ProgressBar? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +53,12 @@ class Connexion : AppCompatActivity() {
 
         peripheriqueText = findViewById(R.id.textPeripheriqueName)
         btnConnecter = findViewById(R.id.btnConnecter)
+        progressBar = findViewById(R.id.progressBar_cyclic)
+        progressBar!!.indeterminateDrawable.setColorFilter(0xFFFF0000.toInt(), android.graphics.PorterDuff.Mode.MULTIPLY) //Change la coleur de la progress bar
 
         btnConnecter!!.setOnClickListener {
             println("click sur connecter")
+            progressBar!!.visibility = View.VISIBLE
             peripherique!!.connecter()
             while (!peripherique!!.isConnected);
             Peripherique.peripherique = peripherique

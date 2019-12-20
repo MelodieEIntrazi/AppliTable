@@ -92,20 +92,19 @@ class Menu : androidx.fragment.app.Fragment() {
         adapter.setNotifyOnChange(true)
         adapter2.setNotifyOnChange(true)
         spinnerMode!!.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when (position) {
-                    1 -> {
-                        onChangeFragListener.onChangeFragment(Programme.programme)
-                        spinnerMode!!.setSelection(0)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) =
+                    when (position) {
+                        1 -> {
+                            onChangeFragListener.onChangeFragment(Programme.programme)
+                            spinnerMode!!.setSelection(0)
+                        }
+                        2 -> {
+                            onChangeFragListener.onChangeFragment(TempsReel.temps_reel)
+                            spinnerMode!!.setSelection(0)
+                        }
+                        else -> {
+                        }
                     }
-                    2 -> {
-                        onChangeFragListener.onChangeFragment(TempsReel.temps_reel)
-                        spinnerMode!!.setSelection(0)
-                    }
-                    else -> {
-                    }
-                }
-            }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }

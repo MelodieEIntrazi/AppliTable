@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.application.Activité_n2.Instructions.Instruction
 import com.example.application.Activité_n2.Instructions.InstructionCamera
@@ -24,6 +25,7 @@ class InstructionAdapter(var context: Context, var instructionList: List<Instruc
         var vitesseTextMoteur: TextView = v.findViewById(R.id.VitesseTextMoteur)
         var stepsTextMoteur: TextView = v.findViewById(R.id.StepsTextMoteur)
         var etatMoteur: Button = v.findViewById(R.id.etatButton)
+        var imageMoteur: ImageView = v.findViewById(R.id.imageView3)
 
     }
 
@@ -34,6 +36,7 @@ class InstructionAdapter(var context: Context, var instructionList: List<Instruc
         var numberPhotoTextCamera: TextView = v.findViewById(R.id.numberPhotoTextCamera)
         var pauseTextCamera: TextView = v.findViewById(R.id.PauseTextCamera)
         var etatInstructionCamera: Button = v.findViewById(R.id.Etat_InstructionCamera)
+        var imageCamera: ImageView = v.findViewById(R.id.imageView2)
 
     }
 
